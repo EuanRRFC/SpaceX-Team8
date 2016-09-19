@@ -16,12 +16,12 @@
         <Button x:Name="ButtonLoadFile7" Content="Load Data File 7" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Width="100" Click="button_Click" Tag="link7.rec"/>
         <Button x:Name="ButtonLoadFile8" Content="Load Data File 8" HorizontalAlignment="Left" Margin="10,185,0,0" VerticalAlignment="Top" Width="100" Click="button_Click" Tag="link8.rec"/>
         <Button x:Name="ButtonShowFile1" Content="Show Data File 1" HorizontalAlignment="Left" Margin="115,10,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="0"/>
-        <Button x:Name="ButtonShowFile2" Content="Show Data File 2" HorizontalAlignment="Left" Margin="115,35,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="1"/>
+        <Button x:Name="ButtonShowFile2" Content="Show Data File 2" HorizontalAlignment="Left" Margin="115,35,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="0"/>
         <Button x:Name="ButtonShowFile3" Content="Show Data File 3" HorizontalAlignment="Left" Margin="115,60,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="2"/>
-        <Button x:Name="ButtonShowFile4" Content="Show Data File 4" HorizontalAlignment="Left" Margin="115,85,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="3"/>
+        <Button x:Name="ButtonShowFile4" Content="Show Data File 4" HorizontalAlignment="Left" Margin="115,85,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="2"/>
         <Button x:Name="ButtonShowFile5" Content="Show Data File 5" HorizontalAlignment="Left" Margin="115,110,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="4"/>
-        <Button x:Name="ButtonShowFile6" Content="Show Data File 6" HorizontalAlignment="Left" Margin="115,135,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="5"/>
+        <Button x:Name="ButtonShowFile6" Content="Show Data File 6" HorizontalAlignment="Left" Margin="115,135,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="4"/>
         <Button x:Name="ButtonShowFile7" Content="Show Data File 7" HorizontalAlignment="Left" Margin="115,160,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="6"/>
-        <Button x:Name="ButtonShowFile8" Content="Show Data File 8" HorizontalAlignment="Left" Margin="115,185,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="7"/>
+        <Button x:Name="ButtonShowFile8" Content="Show Data File 8" HorizontalAlignment="Left" Margin="115,185,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="6"/>
     </Grid>
 </Window>
