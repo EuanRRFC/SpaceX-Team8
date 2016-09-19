@@ -33,7 +33,11 @@ namespace Star_Reader
             FileReader reader = new FileReader();
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
-                FileContentBox.Text = File.ReadAllText(openFileDialog.FileName);
+            FileContentBox.Text = File.ReadAllText(openFileDialog.FileName);
+        }
+        private void OpenTab(object sender, RoutedEventArgs e)
+        {
+            
         }
 
     }

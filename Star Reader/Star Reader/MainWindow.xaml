@@ -4,25 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Star_Reader"
+        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+        xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Star Reader" Height="480" Width="720">
-    <Grid>
-        <TabControl x:Name="ContentTabs" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
-            <TabItem Header="File Upload">
+    <Window.Resources>
+        <system:String x:Key="Partition">QuickStart</system:String>
+    </Window.Resources>
+    <dockablz:Layout Partition="{StaticResource Partition}">
+        <dragablz:TabablzControl Margin="8" ConsolidateOrphanedItems="True" >
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController Partition="{StaticResource Partition}" />
+            </dragablz:TabablzControl.InterTabController>
+            <TabItem Header="File Upload" IsSelected="True">
                 <Grid>
-                    <Button x:Name="UploadFileButton" x:FieldModifier="public" Click="ReadFile" Content="Upload File" Margin="0,10,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Center" Width="74"/>
+                    <StackPanel  Orientation = "Horizontal" VerticalAlignment="Top">
+                        <Button x:Name="UploadFileButton" x:FieldModifier="public" Click="ReadFile" Content="Upload File" Margin="10" Height="20" Width="74"/>
+                        <Button x:Name="OpenInTabView" x:FieldModifier="public" Click="OpenTab" Content="Open as tab" Margin="10" Height="20"  Width="74"/>
+                    </StackPanel>
                     <TextBox x:Name="FileContentBox" x:FieldModifier="public" Margin="10,40,10,5" TextWrapping="Wrap" Text="TextBox"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Something Else" IsEnabled="False">
-            </TabItem>
-            <TabItem Header="Something Else" IsEnabled="False">
-            </TabItem>
-            <TabItem Header="Something Else" IsEnabled="False">
-            </TabItem>
-            <TabItem Header="Something Else" IsEnabled="False">
-            </TabItem>
-        </TabControl>
-
-    </Grid>
+        </dragablz:TabablzControl>
+    </dockablz:Layout>
 </Window>
