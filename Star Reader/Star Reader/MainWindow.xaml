@@ -26,6 +26,29 @@
                     <TextBox x:Name="FileContentBox" x:FieldModifier="public" Margin="10,40,10,5" TextWrapping="Wrap" Text="TextBox"/>
                 </Grid>
             </TabItem>
+            <TabItem Header="Tab No. 2">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">We Have Tearable Tabs!</TextBlock>
+            </TabItem>
+            <TabItem>
+                <!-- context menu -->
+                <TabItem.Header>
+                    <Grid>
+                        <Grid.ContextMenu>
+                            <ContextMenu>
+                                
+                                <MenuItem Command="{x:Static dragablz:TabablzControl.CloseItemCommand}"/>
+                            </ContextMenu>
+                        </Grid.ContextMenu>
+                        <TextBlock>Tab No. 3</TextBlock>
+                       
+                    </Grid>
+                </TabItem.Header>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">I feel like an ice cold drink</TextBlock>
+     
+            </TabItem>
+            <TabItem Header="Tab No. 4">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">We Have Tearable Tabs!</TextBlock>
+            </TabItem>
         </dragablz:TabablzControl>
     </dockablz:Layout>
 </Window>
