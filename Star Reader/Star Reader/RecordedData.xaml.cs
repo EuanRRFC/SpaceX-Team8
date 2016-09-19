@@ -40,33 +40,82 @@ namespace Star_Reader
                     Button btn1 = new Button();
                     btn1.Width = Size;
                     btn1.Height = Size;
-                    if (p.getPacketType() == 'E')
-                    {
-                        btn1.Background = Brushes.Red;
-                        btn1.ToolTip = p.getPacketTime() + "\n" + p.getPacketType() + "\n" + p.getErrorType();
-                    }
-                    else
-                    {
-                        btn1.Background = Brushes.Blue;
-                        btn1.ToolTip = p.getPacketTime() + "\n" + p.getPacketType() + "\n" + p.getPacketData() + "\n" + p.getPacketEnd();
-                    }
-                    PacketViewerA.Children.Add(btn1);
                     Button btn2 = new Button();
                     btn2.Height = Size;
                     if (p.getPacketType() == 'E')
                     {
+                        btn1.Background = Brushes.Red;
+                        btn1.ToolTip = p.getPacketTime() + "\n" + p.getPacketType() + "\n" + p.getErrorType();
+                        btn1.Content = p.getErrorType()[0];
                         btn2.Background = Brushes.Red;
-                        btn2.ToolTip = p.getPacketTime() + "\n" + p.getPacketType() + "\n" + p.getErrorType();
+                        btn2.Content = p.getPacketTime() + " - " + p.getPacketType() + " - " + p.getErrorType();
                     }
                     else
                     {
-                        btn2.Background = Brushes.Blue;
-                        btn2.ToolTip = p.getPacketTime() + "\n" + p.getPacketType() + "\n" + p.getPacketData() + "\n" + p.getPacketEnd();
+                        if (p.getPacketEnd().Equals("EOP"))
+                        {
+                            btn1.Background = Brushes.Blue;
+                            btn1.ToolTip = p.getPacketTime() + "\n" + p.getPacketType() + "\n" + p.getPacketData() + "\n" + p.getPacketEnd();
+                            btn2.Background = Brushes.Blue;
+                            btn2.Content = p.getPacketTime() + " - " + p.getPacketType() + " - " + p.getPacketData() + " - " + p.getPacketEnd();
+                            btn2.Foreground = Brushes.White;
+                        }
+                        else
+                        {
+                            btn1.Background = Brushes.Orange;
+                            btn1.ToolTip = p.getPacketTime() + "\n" + p.getPacketType() + "\n" + p.getPacketData() + "\n" + p.getPacketEnd();
+                            btn2.Background = Brushes.Orange;
+                            btn2.Content = p.getPacketTime() + " - " + p.getPacketType() + " - " + p.getPacketData() + " - " + p.getPacketEnd();
+                        }
                     }
+                    PacketViewerA.Children.Add(btn1);
                     DetailedViewerA.Children.Add(btn2);
                 }
             }
-        }
 
+            Recording RB = (Recording)App.RecordStore[x+1];
+            if (RB != null)
+            {
+                int length = RB.getNumberOfPackets();
+                int Size = 20;
+                for (int i = 0; i < length; i++)
+                {
+                    Packet p = RB.getPacket(i);
+                    Button btn3 = new Button();
+                    btn3.Width = Size;
+                    btn3.Height = Size;
+                    Button btn4 = new Button();
+                    btn4.Height = Size;
+                    if (p.getPacketType() == 'E')
+                    {
+                        btn3.Background = Brushes.Red;
+                        btn3.ToolTip = p.getPacketTime() + "\n" + p.getPacketType() + "\n" + p.getErrorType();
+                        btn3.Content = p.getErrorType()[0];
+                        btn4.Background = Brushes.Red;
+                        btn4.Content = p.getPacketTime() + " - " + p.getPacketType() + " - " + p.getErrorType();
+                    }
+                    else
+                    {
+                        if (p.getPacketEnd().Equals("EOP"))
+                        {
+                            btn3.Background = Brushes.Blue;
+                            btn3.ToolTip = p.getPacketTime() + "\n" + p.getPacketType() + "\n" + p.getPacketData() + "\n" + p.getPacketEnd();
+                            btn4.Background = Brushes.Blue;
+                            btn4.Content = p.getPacketTime() + " - " + p.getPacketType() + " - " + p.getPacketData() + " - " + p.getPacketEnd();
+                            btn4.Foreground = Brushes.White;
+                        }
+                        else
+                        {
+                            btn3.Background = Brushes.Orange;
+                            btn3.ToolTip = p.getPacketTime() + "\n" + p.getPacketType() + "\n" + p.getPacketData() + "\n" + p.getPacketEnd();
+                            btn4.Background = Brushes.Orange;
+                            btn4.Content = p.getPacketTime() + " - " + p.getPacketType() + " - " + p.getPacketData() + " - " + p.getPacketEnd();
+                        }
+                    }
+                    PacketViewerB.Children.Add(btn3);
+                    DetailedViewerB.Children.Add(btn4);
+                }
+            }
+        }
     }
 }
