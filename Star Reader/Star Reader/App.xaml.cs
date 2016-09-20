@@ -13,5 +13,6 @@ namespace Star_Reader
     /// </summary>
     public partial class App : Application
     {
+        public static object[] RecordStore = new object[8];
     }
 }

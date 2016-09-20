@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
+using Star_Reader.Model;
 
 namespace Star_Reader
 {
@@ -25,20 +26,22 @@ namespace Star_Reader
         public MainWindow()
         {
             InitializeComponent();
-          
         }
 
-        private void ReadFile(object sender, RoutedEventArgs e)
+        private void button_Click(object sender, RoutedEventArgs e)
         {
-            FileReader reader = new FileReader();
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() == true)
-            FileContentBox.Text = File.ReadAllText(openFileDialog.FileName);
-        }
-        private void OpenTab(object sender, RoutedEventArgs e)
-        {
-            
+            Button b = sender as Button;
+            string tag = b.Tag.ToString();
+            FileReader fr = new FileReader();
+            fr.storeRecording(tag);
+
         }
 
+        private void ButtonShowFile_Click(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+            RecordedData r = new RecordedData(Int32.Parse(b.Tag.ToString()));
+            r.Show();
+        }
     }
 }
