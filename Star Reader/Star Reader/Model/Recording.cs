@@ -11,7 +11,7 @@ namespace Star_Reader.Model
         public List<Packet> ListOfPackets { get; set; }
         public DateTime PacketStartTime { get; set; }
         public DateTime PacketEndTime { get; set; }
-        public int Channel { get; set; }
+        public int Port { get; set; }
         public int ErrorsPresent { get; set; }
 
         public Recording()
@@ -23,7 +23,7 @@ namespace Star_Reader.Model
         public void AddPacket(Packet toAdd)
         {
             ListOfPackets.Add(toAdd);
-            if (toAdd.getPacketType() == 'E')
+            if (toAdd.PacketType == 'E')
             {
                 ErrorsPresent++;
             }

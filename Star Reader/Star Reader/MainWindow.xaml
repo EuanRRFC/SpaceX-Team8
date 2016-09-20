@@ -8,38 +8,22 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:Star_Reader"
         mc:Ignorable="d"
-        Title="SpaceWire" Height="300" Width="350">
-
-
+        Title="Space Wire Reader" Height="720" Width="1280">
     <Window.Resources>
         <system:String x:Key="Partition">QuickStart</system:String>
     </Window.Resources>
     <dockablz:Layout Partition="{StaticResource Partition}">
-        <dragablz:TabablzControl Margin="8" ConsolidateOrphanedItems="True" >
-            <dragablz:TabablzControl.InterTabController>
-                <dragablz:InterTabController Partition="{StaticResource Partition}" />
-            </dragablz:TabablzControl.InterTabController>
-            <TabItem Header="File Upload" IsSelected="True">
-                <Grid>
-                    <Button x:Name="ButtonLoadFile1" Content="Load Data File 1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Click="button_Click" Tag="link1.rec"/>
-                    <Button x:Name="ButtonLoadFile2" Content="Load Data File 2" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="100" Click="button_Click" Tag="link2.rec"/>
-                    <Button x:Name="ButtonLoadFile3" Content="Load Data File 3" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="100" Click="button_Click" Tag="link3.rec"/>
-                    <Button x:Name="ButtonLoadFile4" Content="Load Data File 4" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" Width="100" Click="button_Click" Tag="link4.rec"/>
-                    <Button x:Name="ButtonLoadFile5" Content="Load Data File 5" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Width="100" Click="button_Click" Tag="link5.rec"/>
-                    <Button x:Name="ButtonLoadFile6" Content="Load Data File 6" HorizontalAlignment="Left" Margin="10,135,0,0" VerticalAlignment="Top" Width="100" Click="button_Click" Tag="link6.rec"/>
-                    <Button x:Name="ButtonLoadFile7" Content="Load Data File 7" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Width="100" Click="button_Click" Tag="link7.rec"/>
-                    <Button x:Name="ButtonLoadFile8" Content="Load Data File 8" HorizontalAlignment="Left" Margin="10,185,0,0" VerticalAlignment="Top" Width="100" Click="button_Click" Tag="link8.rec"/>
-                    <Button x:Name="ButtonShowFile1" Content="Show Data File 1" HorizontalAlignment="Left" Margin="115,10,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="0"/>
-                    <Button x:Name="ButtonShowFile2" Content="Show Data File 2" HorizontalAlignment="Left" Margin="115,35,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="0"/>
-                    <Button x:Name="ButtonShowFile3" Content="Show Data File 3" HorizontalAlignment="Left" Margin="115,60,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="2"/>
-                    <Button x:Name="ButtonShowFile4" Content="Show Data File 4" HorizontalAlignment="Left" Margin="115,85,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="2"/>
-                    <Button x:Name="ButtonShowFile5" Content="Show Data File 5" HorizontalAlignment="Left" Margin="115,110,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="4"/>
-                    <Button x:Name="ButtonShowFile6" Content="Show Data File 6" HorizontalAlignment="Left" Margin="115,135,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="4"/>
-                    <Button x:Name="ButtonShowFile7" Content="Show Data File 7" HorizontalAlignment="Left" Margin="115,160,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="6"/>
-                    <Button x:Name="ButtonShowFile8" Content="Show Data File 8" HorizontalAlignment="Left" Margin="115,185,0,0" VerticalAlignment="Top" Width="200" Click="ButtonShowFile_Click" Tag="6"/>
-                </Grid>
-            </TabItem>
-        </dragablz:TabablzControl>
+        <Grid>
+            <Menu Height="28" VerticalAlignment="Top" Background="#FFAEADAD">
+                <Button x:Name="UploadFileButton" Content="Upload File" Click="UploadFileButton_OnClick"/>
+            </Menu>
+            <dragablz:TabablzControl Margin="0,28,0,0" ConsolidateOrphanedItems="True" Name="TabControl" >
+                <dragablz:TabablzControl.InterTabController>
+                    <dragablz:InterTabController Partition="{StaticResource Partition}" />
+                </dragablz:TabablzControl.InterTabController>
+                <TabItem Header="Statistics">
+                </TabItem>
+            </dragablz:TabablzControl>
+        </Grid>
     </dockablz:Layout>
-
 </Window>

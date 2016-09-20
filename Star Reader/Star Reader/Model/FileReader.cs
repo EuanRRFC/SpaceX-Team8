@@ -11,13 +11,13 @@ namespace Star_Reader.Model
 
         }
 
-        public void StoreRecording(string path)
+        public Recording StoreRecording(string path)
         {
             string[] lines = File.ReadAllLines(path);
             Recording r = new Recording
             {
                 PacketStartTime = Convert.ToDateTime(lines[0]),
-                Channel = int.Parse(lines[1]),
+                Port = int.Parse(lines[1]),
                 PacketEndTime = Convert.ToDateTime(lines[lines.Length - 1])
             };
 
@@ -45,7 +45,8 @@ namespace Star_Reader.Model
                         break;
                 }
             }
-            App.RecordStore[r.Channel] = r;
+           // App.RecordStore.Add(r);
+            return r;
         }
     }
 }

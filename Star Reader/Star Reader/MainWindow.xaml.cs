@@ -28,20 +28,27 @@ namespace Star_Reader
             InitializeComponent();
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void UploadFileButton_OnClick(object sender, RoutedEventArgs e)
         {
-            Button b = sender as Button;
-            string tag = b.Tag.ToString();
-            FileReader fr = new FileReader();
-            fr.StoreRecording(tag);
-
-        }
-
-        private void ButtonShowFile_Click(object sender, RoutedEventArgs e)
-        {
-            Button b = sender as Button;
-            RecordedData r = new RecordedData(Int32.Parse(b.Tag.ToString()));
-            r.Show();
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Multiselect = true,
+                Filter = "Rec files (*.rec)|*.rec|Text files (*.txt)|*.txt",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer)
+            };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                FileReader fr = new FileReader();
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    Recording r= fr.StoreRecording(file);
+                    RecordedData tab = new RecordedData()
+                    {
+                        Header = "Port " + r.Port
+                    };
+                    TabControl.AddToSource(tab);
+                }
+            }
         }
     }
 }

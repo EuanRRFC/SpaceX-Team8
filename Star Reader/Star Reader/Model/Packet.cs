@@ -27,27 +27,5 @@ namespace Star_Reader.Model
             PacketType = pt;
             ErrorType = et;
         }
-
-        public char getPacketType()
-        {
-            return PacketType;
-        }
-        public DateTime getPacketTime()
-        {
-            return Time;
-        }
-        public string getPacketData()
-        {
-            return Payload;
-        }
-        public string getErrorType()
-        {
-            return ErrorType;
-        }
-        public string getPacketEnd()
-        {
-            return PacketEnd;
-        }
-
     }
 }
