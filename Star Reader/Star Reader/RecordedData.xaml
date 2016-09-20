@@ -32,9 +32,9 @@
                     <ScrollViewer BorderThickness="25" >
                         <WrapPanel Name="PacketViewerA" />
                     </ScrollViewer>
-                    <ScrollViewer Grid.Column="1" BorderThickness="25" >
-                        <StackPanel Name="DetailedViewerA" />
-                    </ScrollViewer>
+                     <DataGrid Grid.Row="0" Grid.Column="1" Name="DetailedViewerA" >
+                      </DataGrid>
+
                     <ScrollViewer Grid.Row="2" BorderThickness="25">
                         <WrapPanel Name="PacketViewerB"/>
                     </ScrollViewer>

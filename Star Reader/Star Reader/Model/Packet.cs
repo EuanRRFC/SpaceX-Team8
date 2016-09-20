@@ -6,47 +6,47 @@ using System.Threading.Tasks;
 
 namespace Star_Reader.Model
 {
-    class Packet
+    public class Packet
     {
-        private DateTime time;
-        private string payload;
-        private char packetType;
-        private string errorType;
-        private string packetEnd;
+        public DateTime Time { get; set; }
+        public string Payload { get; set; }
+        public char PacketType { get; set; }
+        public string ErrorType { get; set; }
+        public string PacketEnd { get; set; }
 
         public Packet(DateTime dt, string contents, char pt, string pe)
         {
-            time = dt;
-            payload = contents;
-            packetType = pt;
-            packetEnd = pe;
+            Time = dt;
+            Payload = contents;
+            PacketType = pt;
+            PacketEnd = pe;
         }
         public Packet(DateTime dt, char pt, string et)
         {
-            time = dt;
-            packetType = pt;
-            errorType = et;
+            Time = dt;
+            PacketType = pt;
+            ErrorType = et;
         }
 
         public char getPacketType()
         {
-            return packetType;
+            return PacketType;
         }
         public DateTime getPacketTime()
         {
-            return time;
+            return Time;
         }
         public string getPacketData()
         {
-            return payload;
+            return Payload;
         }
         public string getErrorType()
         {
-            return errorType;
+            return ErrorType;
         }
         public string getPacketEnd()
         {
-            return packetEnd;
+            return PacketEnd;
         }
 
     }
