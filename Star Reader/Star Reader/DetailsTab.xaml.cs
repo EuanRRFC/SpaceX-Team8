@@ -70,6 +70,38 @@ namespace Star_Reader
             for (int i = 0; i < length; i++)
             {
                 Packet p = r.ListOfPackets[i];
+                if(i>0)
+                {
+                    Packet NextP = r.ListOfPackets[i - 1];
+                    TimeSpan td = p.Time.Subtract(NextP.Time);
+                    if(td.TotalMilliseconds > 100)
+                    {
+                        Button btn1s = new Button();
+                        btn1s.Width = size;
+                        btn1s.Height = size;
+
+                        switch (td.Seconds)
+                        {
+                            case 0:
+                                btn1s.ToolTip = "Empty Space of 0." + td.TotalMilliseconds + " seconds.";
+                                btn1s.Background = Brushes.White;
+                                break;
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+                                btn1s.ToolTip = "Empty Space of " + td.Seconds + "." + td.TotalMilliseconds.ToString().Substring(1) + " seconds.";
+                                btn1s.Background = Brushes.Beige;
+                                break;
+                            default:
+                                btn1s.ToolTip = "Empty Space of " + td.Seconds + "." + td.TotalMilliseconds.ToString().Substring(1) + " seconds.";
+                                btn1s.Background = Brushes.Crimson;
+                                break;
+                        }
+                        PacketViewerA.Children.Add(btn1s);
+                        
+                    }
+                }
                 Button btn1 = new Button
                 {
                     Width = size,
@@ -78,7 +110,7 @@ namespace Star_Reader
                 if (p.PacketType == 'E')
                 {
                     btn1.Background = Brushes.Red;
-                    btn1.ToolTip = p.Time + "\n" + p.PacketType + "\n" + p.ErrorType;
+                    btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.ErrorType;
                     btn1.Content = p.ErrorType[0];
                 }
                 else
@@ -86,12 +118,12 @@ namespace Star_Reader
                     if (p.PacketEnd.Equals("EOP"))
                     {
                         btn1.Background = Brushes.Blue;
-                        btn1.ToolTip = p.Time + "\n" + p.PacketType + "\n" + p.Payload +"\n" + p.PacketEnd;
+                        btn1.ToolTip = p.Time +"."+p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload +"\n" + p.PacketEnd;
                     }
                     else
                     {
                         btn1.Background = Brushes.Orange;
-                        btn1.ToolTip = p.Time + "\n" + p.PacketType+ "\n" + p.Payload +"\n" + p.PacketEnd;
+                        btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType+ "\n" + p.Payload +"\n" + p.PacketEnd;
                     }
                 }
                 PacketViewerA.Children.Add(btn1);
