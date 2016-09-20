@@ -42,7 +42,7 @@ namespace Star_Reader
                 foreach (var file in openFileDialog.FileNames)
                 {
                     Recording r= fr.StoreRecording(file);
-                    RecordedData tab = new RecordedData()
+                    DetailsTab tab = new DetailsTab(r)
                     {
                         Header = "Port " + r.Port
                     };
