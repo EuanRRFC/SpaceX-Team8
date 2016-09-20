@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:local="clr-namespace:Star_Reader"
         mc:Ignorable="d"
         Title="SpaceWire - Recorded Packets" Height="350" Width="525">
@@ -19,10 +20,11 @@
         <ScrollViewer BorderThickness="25" >
             <WrapPanel Name="PacketViewerA" />
         </ScrollViewer>
-        <ScrollViewer Grid.Column="1" BorderThickness="25" >
-            <StackPanel Name="DetailedViewerA" />
-        </ScrollViewer>
-        <ScrollViewer Grid.Row="2" BorderThickness="25">
+  
+            <DataGrid Grid.Row="0" Grid.Column="1" Name="DetailedViewerA" >
+            </DataGrid>
+
+        <ScrollViewer Grid.Row="2" Grid.Column="0" BorderThickness="25">
             <WrapPanel Name="PacketViewerB"/>
         </ScrollViewer>
         <ScrollViewer Grid.Column="1" Grid.Row="2" BorderThickness="25" >

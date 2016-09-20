@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Star_Reader.Model;
+using System.Windows.Forms;
+using Button = System.Windows.Controls.Button;
+using Color = System.Drawing.Color;
 
 namespace Star_Reader
 {
@@ -20,72 +25,95 @@ namespace Star_Reader
     /// </summary>
     public partial class RecordedData : Window
     {
+
+
         public RecordedData(int x)
         {
             InitializeComponent();
-            someotherfunction(x);
+            PopulateOverview(x);
+            PopulateDataGrid(x);
         }
 
-
-        public void someotherfunction(int x)
+        public void PopulateDataGrid(int x)
         {
-            Recording R = (Recording)App.RecordStore[x];
-            if (R != null)
+            Recording r = (Recording)App.RecordStore[x];
+            DetailedViewerA.ItemsSource = r.ListOfPackets;
+            //foreach (DataGridRow row in DetailedViewerA.ItemContainerGenerator.Items)
+            //{
+            //    row.Background = Brushes.Red;
+            //    //switch ((string)row.Item["ErrorType"].Value)
+            //    //{
+            //    //    case "E":
+                       
+            //    //        break;
+            //    //    case "EOP":
+            //    //        row.Background = Brushes.Blue;
+            //    //        row.Foreground = Brushes.White;
+            //    //        break;
+            //    //    default:
+            //    //        row.Background = Brushes.Orange;
+            //    //        break;
+            //    //}
+            //}
+        }
+
+        public void PopulateOverview(int x)
+        {
+            const int size = 20;
+            Recording r = (Recording)App.RecordStore[x];
+            if (r != null)
             {
-                int length = R.getNumberOfPackets();
-                int Size = 20;
+                int length = r.ListOfPackets.Count;
+
                 for (int i = 0; i < length; i++)
                 {
-                    Packet p = R.getPacket(i);
-                    Button btn1 = new Button();
-                    btn1.Width = Size;
-                    btn1.Height = Size;
-                    Button btn2 = new Button();
-                    btn2.Height = Size;
+                    Packet p = r.ListOfPackets[i];
+                    Button btn1 = new Button
+                    {
+                        Width = size,
+                        Height = size
+                    };
                     if (p.getPacketType() == 'E')
                     {
                         btn1.Background = Brushes.Red;
                         btn1.ToolTip = p.getPacketTime() + "\n" + p.getPacketType() + "\n" + p.getErrorType();
                         btn1.Content = p.getErrorType()[0];
-                        btn2.Background = Brushes.Red;
-                        btn2.Content = p.getPacketTime() + " - " + p.getPacketType() + " - " + p.getErrorType();
+
                     }
                     else
                     {
                         if (p.getPacketEnd().Equals("EOP"))
                         {
                             btn1.Background = Brushes.Blue;
-                            btn1.ToolTip = p.getPacketTime() + "\n" + p.getPacketType() + "\n" + p.getPacketData() + "\n" + p.getPacketEnd();
-                            btn2.Background = Brushes.Blue;
-                            btn2.Content = p.getPacketTime() + " - " + p.getPacketType() + " - " + p.getPacketData() + " - " + p.getPacketEnd();
-                            btn2.Foreground = Brushes.White;
+                            btn1.ToolTip = p.getPacketTime() + "\n" + p.getPacketType() + "\n" + p.getPacketData() +
+                                           "\n" + p.getPacketEnd();
                         }
                         else
                         {
                             btn1.Background = Brushes.Orange;
-                            btn1.ToolTip = p.getPacketTime() + "\n" + p.getPacketType() + "\n" + p.getPacketData() + "\n" + p.getPacketEnd();
-                            btn2.Background = Brushes.Orange;
-                            btn2.Content = p.getPacketTime() + " - " + p.getPacketType() + " - " + p.getPacketData() + " - " + p.getPacketEnd();
+                            btn1.ToolTip = p.getPacketTime() + "\n" + p.getPacketType() + "\n" + p.getPacketData() +
+                                           "\n" + p.getPacketEnd();
                         }
                     }
                     PacketViewerA.Children.Add(btn1);
-                    DetailedViewerA.Children.Add(btn2);
+
                 }
             }
 
-            Recording RB = (Recording)App.RecordStore[x+1];
-            if (RB != null)
+            Recording rb = (Recording)App.RecordStore[x + 1];
+            if (rb == null) return;
             {
-                int length = RB.getNumberOfPackets();
-                int Size = 20;
+                int length = rb.ListOfPackets.Count;
                 for (int i = 0; i < length; i++)
                 {
-                    Packet p = RB.getPacket(i);
-                    Button btn3 = new Button();
-                    btn3.Width = Size;
-                    btn3.Height = Size;
+                    Packet p = rb.ListOfPackets[i];
+                    Button btn3 = new Button
+                    {
+                        Width = size,
+                        Height = size
+                    };
                     Button btn4 = new Button();
-                    btn4.Height = Size;
+                    btn4.Height = size;
                     if (p.getPacketType() == 'E')
                     {
                         btn3.Background = Brushes.Red;

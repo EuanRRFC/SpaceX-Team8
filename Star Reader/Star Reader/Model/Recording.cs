@@ -6,63 +6,27 @@ using System.Threading.Tasks;
 
 namespace Star_Reader.Model
 {
-    class Recording
+    public class Recording
     {
-        private List<Packet> listOfPackets = new List<Packet>();
-        private DateTime packetStartTime;
-        private DateTime packetEndTime;
-        private int channel;
-        private int errorsPresent = 0;
+        public List<Packet> ListOfPackets { get; set; }
+        public DateTime PacketStartTime { get; set; }
+        public DateTime PacketEndTime { get; set; }
+        public int Channel { get; set; }
+        public int ErrorsPresent { get; set; }
 
         public Recording()
         {
-
+            ErrorsPresent = 0;
+            ListOfPackets = new List<Packet>();
         }
 
-        public void addStartTime(DateTime start)
+        public void AddPacket(Packet toAdd)
         {
-            packetStartTime = start;
-        }
-        public void addEndTime(DateTime end)
-        {
-            packetEndTime = end;
-        }
-        public void addChannel(int c)
-        {
-            channel = c;
-        }
-        public void addPacket(Packet toAdd)
-        {
-            listOfPackets.Add(toAdd);
+            ListOfPackets.Add(toAdd);
             if (toAdd.getPacketType() == 'E')
             {
-                errorsPresent++;
+                ErrorsPresent++;
             }
-        }
-
-        public int getNumberOfPackets()
-        {
-            return listOfPackets.Count;
-        }
-        public int getNumberOfErrors()
-        {
-            return errorsPresent;
-        }
-        public Packet getPacket(int x)
-        {
-            return listOfPackets[x];
-        }
-        public DateTime getStartTime()
-        {
-            return packetStartTime;
-        }
-        public DateTime getEndTime()
-        {
-            return packetEndTime;
-        }
-        public int getChannel()
-        {
-            return channel;
         }
     }
 }
