@@ -45,7 +45,6 @@ namespace Star_Reader.Model
                         break;
                 }
             }
-           // App.RecordStore.Add(r);
             return r;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -41,10 +42,21 @@ namespace Star_Reader
                 FileReader fr = new FileReader();
                 foreach (var file in openFileDialog.FileNames)
                 {
-                    Recording r= fr.StoreRecording(file);
-                    DetailsTab tab = new DetailsTab(r)
+                    Recording r = fr.StoreRecording(file);
+                    var name = "PortTab" + r.Port;
+
+                    for (var i = TabControl.Items.Count; i >0 ; i--)
                     {
-                        Header = "Port " + r.Port
+                        TabItem item = (TabItem)TabControl.Items[i-1];
+                        if (!item.Name.Equals(name)) continue;
+                        App.RecordingData.Remove(r.Port);
+                        TabControl.Items.Remove(item);
+                    }
+                    App.RecordingData.Add(r.Port, r);
+                    DetailsTab tab = new DetailsTab(r.Port)
+                    {
+                        Header = "Port " + r.Port,
+                        Name = name
                     };
                     TabControl.AddToSource(tab);
                 }
@@ -52,3 +64,4 @@ namespace Star_Reader
         }
     }
 }
+

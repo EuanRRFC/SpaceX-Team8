@@ -26,16 +26,21 @@ namespace Star_Reader
     public partial class DetailsTab : TabItem
     {
 
-        public DetailsTab(Recording r)
+        public DetailsTab(int portNr)
         {
             InitializeComponent();
-            PopulateOverview(r);
-            PopulateDataGrid(r);
+            PopulateOverview(portNr);
+            PopulateDataGrid(portNr);
         }
 
-        public void PopulateDataGrid(Recording r)
+        public void Refresh(int portNr)
         {
-            DetailedViewerA.ItemsSource = r.ListOfPackets;
+          
+        }
+
+        public void PopulateDataGrid(int portNr)
+        {
+            DetailedViewerA.ItemsSource = App.RecordingData[portNr].ListOfPackets;
             //foreach (DataGridRow row in DetailedViewerA.ItemContainerGenerator.Items)
             //{
             //    row.Background = Brushes.Red;
@@ -55,9 +60,10 @@ namespace Star_Reader
             //}
         }
 
-        public void PopulateOverview(Recording r)
+        public void PopulateOverview(int portNr)
         {
             const int size = 20;
+            var r = App.RecordingData[portNr];
             if (r == null) return;
             int length = r.ListOfPackets.Count;
 

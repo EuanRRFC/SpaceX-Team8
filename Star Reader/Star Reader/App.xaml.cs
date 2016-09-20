@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Star_Reader.Model;
 
 namespace Star_Reader
 {
@@ -13,6 +14,6 @@ namespace Star_Reader
     /// </summary>
     public partial class App : Application
     {
-        public static object[] RecordStore = new object[8];
+       public static Dictionary<int,Recording> RecordingData= new Dictionary<int, Recording>();
     }
 }
