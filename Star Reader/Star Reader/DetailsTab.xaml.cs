@@ -28,7 +28,11 @@ namespace Star_Reader
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(string property)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+            // PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
         }
 
         public string FilterString
