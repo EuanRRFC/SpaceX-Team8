@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
          Height="720" Width="1280">
     <Grid>
@@ -19,21 +19,24 @@
         <ScrollViewer BorderThickness="25" Grid.Row="0" Grid.Column="0" >
             <WrapPanel Name="PacketViewerA" />
         </ScrollViewer>
-        <DataGrid Grid.RowSpan="2" Grid.Column="1" Name="DetailedViewerA" ColumnWidth="*">
+        <DataGrid Grid.RowSpan="2" Grid.Column="1" Name="DetailedViewerA" ColumnWidth="Auto" >
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ErrorType}" Value="Disconnect">
-                            <Setter Property="Background" Value="Red"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding ErrorType}" Value="Parity">
                             <Setter Property="Background" Value="Yellow"/>
                         </DataTrigger>
+                        <DataTrigger Binding="{Binding ErrorType}" Value="Parity">
+                            <Setter Property="Background" Value="Red"/>
+                        </DataTrigger>
                         <DataTrigger Binding="{Binding PacketEnd}" Value="EOP">
-                            <Setter Property="Background" Value="#00dddd"/>
+                            <Setter Property="Background" Value="#00dddd"/> <!--Blue-->
                         </DataTrigger>
                         <DataTrigger Binding="{Binding PacketEnd}" Value="None">
-                            <Setter Property="Background" Value="#ffaacc"/>
+                            <Setter Property="Background" Value="#ffaacc"/> <!--Pink-->
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding PacketEnd}" Value="EEP">
+                            <Setter Property="Background" Value="Red"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
