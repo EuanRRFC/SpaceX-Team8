@@ -28,7 +28,11 @@ namespace Star_Reader
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(string property)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+            // PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
         }
 
         public string FilterString
@@ -97,7 +101,7 @@ namespace Star_Reader
                             case 3:
                             case 4:
                                 btn1s.ToolTip = "Empty Space of " + td.Seconds + "." + td.TotalMilliseconds.ToString().Substring(1) + " seconds.";
-                                btn1s.Background = Brushes.Beige;
+                                btn1s.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffe699"));  // Beige
                                 break;
                             default:
                                 btn1s.ToolTip = "Empty Space of " + td.Seconds + "." + td.TotalMilliseconds.ToString().Substring(1) + " seconds.";
@@ -133,12 +137,19 @@ namespace Star_Reader
                 {
                     if (p.PacketEnd.Equals("EOP"))
                     {
-                        btn1.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#00dddd");
+                        btn1.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#00dddd"));   // Blue
                         btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
                     }
                     else
+                        if (p.PacketEnd.Equals("EEP"))
+                        {
+                            btn1.Background = Brushes.Red;
+                            btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
+                            btn1.Content = p.PacketEnd[0];
+                        }
+                        else
                     {
-                        btn1.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#ffaacc");
+                        btn1.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffaacc"));   // Pink
                         btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
                     }
                 }

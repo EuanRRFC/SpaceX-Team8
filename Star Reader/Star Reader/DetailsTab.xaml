@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
          Height="720" Width="1280">
     <Grid>
@@ -53,7 +53,8 @@
         </Grid>
         <lvc:CartesianChart Grid.Row="1" Grid.ColumnSpan="1" Grid.Column="0">
             <lvc:CartesianChart.Series>
-                <lvc:LineSeries Values="{Binding Values1}" StrokeThickness="2" Fill="Transparent" Title="Data Bytes Per Minute" AutomationProperties.HelpText="Data Rate" />
+
+                <lvc:LineSeries Values="{Binding Values1}" StrokeThickness="2" Fill="Transparent" />
             </lvc:CartesianChart.Series>
         </lvc:CartesianChart>
     </Grid>
