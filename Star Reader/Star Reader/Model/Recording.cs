@@ -33,7 +33,7 @@ namespace Star_Reader.Model
         public ChartValues<double>  getDataRates()
         {
             int timeInterval = 60;
-            TimeSpan RecordingLength = PacketEndTime.Subtract(PacketStartTime);
+            TimeSpan RecordingLength = getDurationOfRecording();
             DateTime DataStartPoint = PacketStartTime;
             DateTime DataEndPoint = PacketStartTime.AddSeconds(timeInterval);
             int seconds = (int) Math.Round(RecordingLength.TotalSeconds / timeInterval);
@@ -54,6 +54,21 @@ namespace Star_Reader.Model
                 datarate.Add(packets);
             }
             return datarate;
+        }
+
+        public int getTotalPackets()
+        {
+            int rate = 0;
+            for(int i=0;i<ListOfPackets.Count;i++)
+            {
+                rate += ListOfPackets[i].getNumberOfBytes();
+            }
+            return rate;
+        }
+        //can be used to show the time the recording takes. Use .TotalSeconds or .TotalMinutes
+        public TimeSpan getDurationOfRecording()
+        {
+            return PacketEndTime.Subtract(PacketStartTime);
         }
     }
 }
