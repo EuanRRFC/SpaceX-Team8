@@ -27,5 +27,16 @@ namespace Star_Reader.Model
             PacketType = pt;
             ErrorType = et;
         }
+
+        public int getNumberOfBytes()
+        {
+            int bytes = 0;
+            if(Payload!=null)
+            for(int i=0;i<Payload.Length-1;i+=3)
+            {
+                bytes++;
+            }
+            return bytes;
+        }
     }
 }

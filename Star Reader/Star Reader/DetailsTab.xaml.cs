@@ -146,7 +146,7 @@ namespace Star_Reader
                 btn1.Tag = portNr + "" + i;
                 PacketViewerA.Children.Add(btn1);
             }
-            Values1 = new ChartValues<double> { 3, 4, 6, 3, 2, 6 };
+            Values1 = r.getDataRates();// new ChartValues<double> { 3, 4, 6, 3, 2, 6 };
             DataContext = this;
         }
         protected void btn_click(object sender, EventArgs e)

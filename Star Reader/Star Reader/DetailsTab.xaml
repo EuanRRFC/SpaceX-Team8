@@ -53,7 +53,7 @@
         </Grid>
         <lvc:CartesianChart Grid.Row="1" Grid.ColumnSpan="1" Grid.Column="0">
             <lvc:CartesianChart.Series>
-                <lvc:LineSeries Values="{Binding Values1}" StrokeThickness="2" Fill="Transparent" />
+                <lvc:LineSeries Values="{Binding Values1}" StrokeThickness="2" Fill="Transparent" Title="Data Bytes Per Minute" AutomationProperties.HelpText="Data Rate" />
             </lvc:CartesianChart.Series>
         </lvc:CartesianChart>
     </Grid>
