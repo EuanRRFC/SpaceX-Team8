@@ -24,7 +24,7 @@ namespace Star_Reader
         {
             get { return dataGridCollection; }
             set { dataGridCollection = value; NotifyPropertyChanged("DataGridCollection"); }
-        } 
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(string property)
         {
@@ -50,9 +50,10 @@ namespace Star_Reader
         public bool Filter(object obj)
         {
             var packet = obj as Packet;
-            if (packet == null ) return false;
+            if (packet == null) return false;
             if (string.IsNullOrEmpty(filterString)) return true;
-            return packet.ErrorType != null && CultureInfo.CurrentCulture.CompareInfo.IndexOf(packet.ErrorType, filterString, CompareOptions.IgnoreCase) >= 0;
+            return packet.ErrorType != null && CultureInfo.CurrentCulture.CompareInfo.IndexOf(packet.ErrorType, filterString, CompareOptions.IgnoreCase) >= 0
+                || packet.Payload != null && CultureInfo.CurrentCulture.CompareInfo.IndexOf(packet.Payload, filterString, CompareOptions.IgnoreCase) >= 0;
         }
 
         public DetailsTab(int portNr)
@@ -73,11 +74,11 @@ namespace Star_Reader
             for (int i = 0; i < length; i++)
             {
                 Packet p = r.ListOfPackets[i];
-                if(i>0)
+                if (i > 0)
                 {
                     Packet NextP = r.ListOfPackets[i - 1];
                     TimeSpan td = p.Time.Subtract(NextP.Time);
-                    if(td.TotalMilliseconds > 100)
+                    if (td.TotalMilliseconds > 100)
                     {
                         Button btn1s = new Button
                         {
@@ -104,7 +105,7 @@ namespace Star_Reader
                                 break;
                         }
                         PacketViewerA.Children.Add(btn1s);
-                        
+
                     }
                 }
                 Button btn1 = new Button
@@ -142,7 +143,7 @@ namespace Star_Reader
                     }
                 }
                 btn1.Click += new RoutedEventHandler(btn_click);
-                btn1.Tag = portNr +""+ i;
+                btn1.Tag = portNr + "" + i;
                 PacketViewerA.Children.Add(btn1);
             }
             Values1 = new ChartValues<double> { 3, 4, 6, 3, 2, 6 };
@@ -150,13 +151,13 @@ namespace Star_Reader
         }
         protected void btn_click(object sender, EventArgs e)
         {
-            Button b = (Button) sender;
+            Button b = (Button)sender;
             string x = b.Tag.ToString();
             char portc = x[0];
-            int port = int.Parse(portc+"");
+            int port = int.Parse(portc + "");
             int item = int.Parse(x.Substring(1));
             DetailedViewerA.ScrollIntoView(App.RecordingData[port].ListOfPackets[item]);
-            DetailedViewerA.SelectedItem=App.RecordingData[port].ListOfPackets[item];
+            DetailedViewerA.SelectedItem = App.RecordingData[port].ListOfPackets[item];
         }
     }
 }
