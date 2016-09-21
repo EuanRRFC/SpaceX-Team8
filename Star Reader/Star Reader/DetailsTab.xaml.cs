@@ -1,39 +1,66 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Star_Reader.Model;
-using System.Windows.Forms;
-using Button = System.Windows.Controls.Button;
-using Color = System.Drawing.Color;
 using LiveCharts;
-using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Globalization;
 
 namespace Star_Reader
 {
     /// <summary>
     /// Interaction logic for RecordedData.xaml
     /// </summary>
-    public partial class DetailsTab : TabItem
+    public partial class DetailsTab : TabItem, INotifyPropertyChanged
     {
         public ChartValues<double> Values1 { get; set; }
+
+        private ICollectionView dataGridCollection;
+        private string filterString;
+
+        public ICollectionView DataGridCollection
+        {
+            get { return dataGridCollection; }
+            set { dataGridCollection = value; NotifyPropertyChanged("DataGridCollection"); }
+        } 
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged(string property)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        }
+
+        public string FilterString
+        {
+            get { return filterString; }
+            set
+            {
+                filterString = value;
+                NotifyPropertyChanged("FilterString");
+                FilterCollection();
+            }
+        }
+
+        private void FilterCollection()
+        {
+            dataGridCollection?.Refresh();
+        }
+
+        public bool Filter(object obj)
+        {
+            var packet = obj as Packet;
+            if (packet == null ) return false;
+            if (string.IsNullOrEmpty(filterString)) return true;
+            return packet.ErrorType != null && CultureInfo.CurrentCulture.CompareInfo.IndexOf(packet.ErrorType, filterString, CompareOptions.IgnoreCase) >= 0;
+        }
 
         public DetailsTab(int portNr)
         {
             InitializeComponent();
             PopulateOverview(portNr);
-            DetailedViewerA.ItemsSource = App.RecordingData[portNr].ListOfPackets;
+            DataGridCollection = CollectionViewSource.GetDefaultView(App.RecordingData[portNr].ListOfPackets);
+            DataGridCollection.Filter = Filter;
         }
 
         public void PopulateOverview(int portNr)
@@ -52,9 +79,11 @@ namespace Star_Reader
                     TimeSpan td = p.Time.Subtract(NextP.Time);
                     if(td.TotalMilliseconds > 100)
                     {
-                        Button btn1s = new Button();
-                        btn1s.Width = size;
-                        btn1s.Height = size;
+                        Button btn1s = new Button
+                        {
+                            Width = size,
+                            Height = size
+                        };
 
                         switch (td.Seconds)
                         {
@@ -85,37 +114,35 @@ namespace Star_Reader
                 };
                 if (p.PacketType == 'E')
                 {
-                    if (p.ErrorType == "Disconnect")
+                    switch (p.ErrorType)
                     {
-                        btn1.Background = Brushes.Red;
-                        btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.ErrorType;
-                        btn1.Content = p.ErrorType[0];
-                    }
-                    else
-                    {
-                        if (p.ErrorType == "Parity")
-                        {
+                        case "Disconnect":
+                            btn1.Background = Brushes.Red;
+                            btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.ErrorType;
+                            btn1.Content = p.ErrorType[0];
+                            break;
+                        case "Parity":
                             btn1.Background = Brushes.Yellow;
                             btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.ErrorType;
                             btn1.Content = p.ErrorType[0];
-                        }
+                            break;
                     }
                 }
                 else
                 {
                     if (p.PacketEnd.Equals("EOP"))
                     {
-                        btn1.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#00dddd"));
+                        btn1.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#00dddd");
                         btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
                     }
                     else
                     {
-                        btn1.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffaacc"));
+                        btn1.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#ffaacc");
                         btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
                     }
                 }
                 btn1.Click += new RoutedEventHandler(btn_click);
-                btn1.Tag = (portNr +""+ i);
+                btn1.Tag = portNr +""+ i;
                 PacketViewerA.Children.Add(btn1);
             }
             Values1 = new ChartValues<double> { 3, 4, 6, 3, 2, 6 };
@@ -126,12 +153,10 @@ namespace Star_Reader
             Button b = (Button) sender;
             string x = b.Tag.ToString();
             char portc = x[0];
-            int port = Int32.Parse(portc+"");
-            int item = Int32.Parse(x.Substring(1));
+            int port = int.Parse(portc+"");
+            int item = int.Parse(x.Substring(1));
             DetailedViewerA.ScrollIntoView(App.RecordingData[port].ListOfPackets[item]);
             DetailedViewerA.SelectedItem=App.RecordingData[port].ListOfPackets[item];
-
-            
         }
     }
 }
