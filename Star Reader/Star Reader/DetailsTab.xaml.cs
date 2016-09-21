@@ -17,6 +17,7 @@ using Star_Reader.Model;
 using System.Windows.Forms;
 using Button = System.Windows.Controls.Button;
 using Color = System.Drawing.Color;
+using LiveCharts;
 
 namespace Star_Reader
 {
@@ -25,6 +26,9 @@ namespace Star_Reader
     /// </summary>
     public partial class DetailsTab : TabItem
     {
+
+
+        public ChartValues<double> Values1 { get; set; }
 
         public DetailsTab(int portNr)
         {
@@ -130,6 +134,8 @@ namespace Star_Reader
                 btn1.Tag = (portNr +""+ i);
                 PacketViewerA.Children.Add(btn1);
             }
+            Values1 = new ChartValues<double> { 3, 4, 6, 3, 2, 6 };
+            DataContext = this;
         }
         protected void btn_click(object sender, EventArgs e)
         {
@@ -139,6 +145,8 @@ namespace Star_Reader
             int port = Int32.Parse(portc+"");
             int item = Int32.Parse(x.Substring(1));
             DetailedViewerA.ScrollIntoView(App.RecordingData[port].ListOfPackets[item]);
+
+            
         }
     }
 }

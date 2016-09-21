@@ -4,6 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
          Height="720" Width="1280">
     <Grid>
@@ -13,12 +14,18 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <ScrollViewer BorderThickness="25" >
+        <ScrollViewer BorderThickness="25" Grid.Row="0" Grid.Column="0" >
             <WrapPanel Name="PacketViewerA" />
         </ScrollViewer>
-        <DataGrid Grid.Row="0" Grid.Column="1" Name="DetailedViewerA" >
+        <DataGrid Grid.RowSpan="2" Grid.Column="1" Name="DetailedViewerA" >
         </DataGrid>
+        <lvc:CartesianChart Grid.Row="1" Grid.ColumnSpan="1" >
+                <lvc:CartesianChart.Series>
+                <lvc:LineSeries Values="{Binding Values1}" StrokeThickness="2" Fill="Transparent" />
+            </lvc:CartesianChart.Series>
+            </lvc:CartesianChart>
     </Grid>
 </TabItem>
 

@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 using Star_Reader.Model;
+using LiveCharts;
 
 namespace Star_Reader
 {
