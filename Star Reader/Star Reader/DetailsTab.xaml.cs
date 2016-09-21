@@ -126,8 +126,19 @@ namespace Star_Reader
                         btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType+ "\n" + p.Payload +"\n" + p.PacketEnd;
                     }
                 }
+                btn1.Click += new RoutedEventHandler(btn_click);
+                btn1.Tag = (portNr +""+ i);
                 PacketViewerA.Children.Add(btn1);
             }
+        }
+        protected void btn_click(object sender, EventArgs e)
+        {
+            Button b = (Button) sender;
+            string x = b.Tag.ToString();
+            char portc = x[0];
+            int port = Int32.Parse(portc+"");
+            int item = Int32.Parse(x.Substring(1));
+            DetailedViewerA.ScrollIntoView(App.RecordingData[port].ListOfPackets[item]);
         }
     }
 }
