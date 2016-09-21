@@ -19,7 +19,7 @@
         <ScrollViewer BorderThickness="25" Grid.Row="0" Grid.Column="0" >
             <WrapPanel Name="PacketViewerA" />
         </ScrollViewer>
-        <DataGrid Grid.RowSpan="2" Grid.Column="1" Name="DetailedViewerA" >
+        <DataGrid Grid.RowSpan="2" Grid.Column="1" Name="DetailedViewerA">
         </DataGrid>
         <lvc:CartesianChart Grid.Row="1" Grid.ColumnSpan="1" >
                 <lvc:CartesianChart.Series>

@@ -18,6 +18,7 @@ using System.Windows.Forms;
 using Button = System.Windows.Controls.Button;
 using Color = System.Drawing.Color;
 using LiveCharts;
+using System.Collections.ObjectModel;
 
 namespace Star_Reader
 {
@@ -26,42 +27,13 @@ namespace Star_Reader
     /// </summary>
     public partial class DetailsTab : TabItem
     {
-
-
         public ChartValues<double> Values1 { get; set; }
 
         public DetailsTab(int portNr)
         {
             InitializeComponent();
             PopulateOverview(portNr);
-            PopulateDataGrid(portNr);
-        }
-
-        public void Refresh(int portNr)
-        {
-          
-        }
-
-        public void PopulateDataGrid(int portNr)
-        {
             DetailedViewerA.ItemsSource = App.RecordingData[portNr].ListOfPackets;
-            //foreach (DataGridRow row in DetailedViewerA.ItemContainerGenerator.Items)
-            //{
-            //    row.Background = Brushes.Red;
-            //    //switch ((string)row.Item["ErrorType"].Value)
-            //    //{
-            //    //    case "E":
-                       
-            //    //        break;
-            //    //    case "EOP":
-            //    //        row.Background = Brushes.Blue;
-            //    //        row.Foreground = Brushes.White;
-            //    //        break;
-            //    //    default:
-            //    //        row.Background = Brushes.Orange;
-            //    //        break;
-            //    //}
-            //}
         }
 
         public void PopulateOverview(int portNr)
@@ -145,6 +117,7 @@ namespace Star_Reader
             int port = Int32.Parse(portc+"");
             int item = Int32.Parse(x.Substring(1));
             DetailedViewerA.ScrollIntoView(App.RecordingData[port].ListOfPackets[item]);
+            DetailedViewerA.SelectedItem=App.RecordingData[port].ListOfPackets[item];
 
             
         }
