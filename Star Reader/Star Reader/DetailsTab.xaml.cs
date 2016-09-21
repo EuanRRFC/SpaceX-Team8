@@ -85,21 +85,33 @@ namespace Star_Reader
                 };
                 if (p.PacketType == 'E')
                 {
-                    btn1.Background = Brushes.Red;
-                    btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.ErrorType;
-                    btn1.Content = p.ErrorType[0];
+                    if (p.ErrorType == "Disconnect")
+                    {
+                        btn1.Background = Brushes.Red;
+                        btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.ErrorType;
+                        btn1.Content = p.ErrorType[0];
+                    }
+                    else
+                    {
+                        if (p.ErrorType == "Parity")
+                        {
+                            btn1.Background = Brushes.Yellow;
+                            btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.ErrorType;
+                            btn1.Content = p.ErrorType[0];
+                        }
+                    }
                 }
                 else
                 {
                     if (p.PacketEnd.Equals("EOP"))
                     {
-                        btn1.Background = Brushes.Blue;
-                        btn1.ToolTip = p.Time +"."+p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload +"\n" + p.PacketEnd;
+                        btn1.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#00dddd"));
+                        btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
                     }
                     else
                     {
-                        btn1.Background = Brushes.Orange;
-                        btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType+ "\n" + p.Payload +"\n" + p.PacketEnd;
+                        btn1.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffaacc"));
+                        btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
                     }
                 }
                 btn1.Click += new RoutedEventHandler(btn_click);
