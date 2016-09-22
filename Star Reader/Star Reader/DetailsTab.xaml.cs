@@ -7,6 +7,8 @@ using Star_Reader.Model;
 using LiveCharts;
 using System.ComponentModel;
 using System.Globalization;
+using LiveCharts.Wpf;
+using System.Collections.Generic;
 
 namespace Star_Reader
 {
@@ -15,7 +17,7 @@ namespace Star_Reader
     /// </summary>
     public partial class DetailsTab : TabItem, INotifyPropertyChanged
     {
-        public ChartValues<double> Values1 { get; set; }
+        private Recording gData;
 
         private ICollectionView dataGridCollection;
         private string filterString;
@@ -28,7 +30,11 @@ namespace Star_Reader
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(string property)
         {
-            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(property));
+            // PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
         }
 
         public string FilterString
@@ -153,8 +159,8 @@ namespace Star_Reader
                 btn1.Tag = portNr + "" + i;
                 PacketViewerA.Children.Add(btn1);
             }
-            Values1 = new ChartValues<double> { 3, 4, 6, 3, 2, 6 };
-            DataContext = this;
+            gData = r;
+            initialiseGraphs();
         }
         protected void btn_click(object sender, EventArgs e)
         {
@@ -166,5 +172,60 @@ namespace Star_Reader
             DetailedViewerA.ScrollIntoView(App.RecordingData[port].ListOfPackets[item]);
             DetailedViewerA.SelectedItem = App.RecordingData[port].ListOfPackets[item];
         }
+
+        private void initialiseGraphs() {
+            SeriesCollection = new SeriesCollection
+            {
+                new LineSeries
+                {
+                    Title = "Series 1",
+                    Values = new ChartValues<double> {}
+                },
+                new RowSeries
+                {
+                    Title = "Series 2",
+                    Values = new ChartValues<double> {},
+                    LabelPoint = point => point.X + ""
+                }
+            };
+
+            radioButton.IsChecked = true;
+        }
+
+        private void radioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            Graphing getPlots = new Graphing();
+            List<double> plots = getPlots.getPlots(gData);
+            for(int x = 0; x < plots.Count; x++)
+            {
+                Console.WriteLine(plots[x]);
+                SeriesCollection[0].Values.Add(plots[x]);
+                DataContext = this;
+            }
+
+        }
+
+        private void radioButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SeriesCollection[0].Values.Clear();
+        }
+
+        private void radioButton2_Checked(object sender, RoutedEventArgs e)
+        {
+            Graphing getBars = new Graphing();
+            List<double> bars = getBars.getBars(gData);
+            for (int x = 0; x <bars.Count; x++)
+            {
+                SeriesCollection[1].Values.Add(bars[x]);
+                DataContext = this;
+            }
+        }
+
+        private void radioButton2_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SeriesCollection[1].Values.Clear();
+        }
+
+        public SeriesCollection SeriesCollection { get; set; }
     }
 }

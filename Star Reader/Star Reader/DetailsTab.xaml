@@ -15,6 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
         </Grid.RowDefinitions>
         <ScrollViewer BorderThickness="25" Grid.Row="0" Grid.Column="0" >
             <WrapPanel Name="PacketViewerA" />
@@ -25,7 +26,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Label>Search by error type:</Label>
@@ -52,11 +53,12 @@
             </DataGrid>
         </Grid>
         <lvc:CartesianChart Grid.Row="1" Grid.ColumnSpan="1" Grid.Column="0">
-            <lvc:CartesianChart.Series>
-
-                <lvc:LineSeries Values="{Binding Values1}" StrokeThickness="2" Fill="Transparent" />
-            </lvc:CartesianChart.Series>
+            <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right" />
         </lvc:CartesianChart>
+        <Grid  Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="2">
+            <RadioButton x:Name="radioButton" Content="DataRate bytes per min" HorizontalAlignment="Left" Margin="20,0,0,40" VerticalAlignment="bottom" Checked="radioButton_Checked" Unchecked="radioButton_Unchecked"/>
+            <RadioButton x:Name="radioButton2" Content="Errors" HorizontalAlignment="Left" Margin="180,0,0,40" VerticalAlignment="bottom" Checked="radioButton2_Checked" Unchecked="radioButton2_Unchecked"/>
+        </Grid>
     </Grid>
 </TabItem>
 
