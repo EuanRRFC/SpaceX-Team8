@@ -36,8 +36,12 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Label>Search:</Label>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <StackPanel Orientation="Vertical">
+                <Label>Search by error type or payload content:</Label>
+                <RadioButton x:Name="radioButtonErr" Content="Search by error type" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Checked="radioButtonErr_Checked" Unchecked="radioButtonErr_Unchecked"/>
+                <RadioButton x:Name="radioButtonPay" Content="Search by payload content" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Checked="radioButtonPay_Checked" Unchecked="radioButtonPay_Unchecked"/>
+            </StackPanel>
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="TextBox" Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="6" Name="DetailedViewerA" ColumnWidth="*" ItemsSource="{Binding DataGridCollection}" IsReadOnly="True">
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell">

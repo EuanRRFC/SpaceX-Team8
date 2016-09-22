@@ -14,10 +14,19 @@
     </Window.Resources>
     <dockablz:Layout Partition="{StaticResource Partition}" >
         <Grid>
-            <Menu Height="28" VerticalAlignment="Top" Background="#FFAEADAD">
-                <Button x:Name="UploadFileButton" Content="Upload File" Click="UploadFileButton_OnClick"/>
-            </Menu>
-            <dragablz:TabablzControl Margin="0,28,0,0" ConsolidateOrphanedItems="True" Name="TabControl" ShowDefaultCloseButton="True" >
+            <DockPanel>
+                <Menu DockPanel.Dock="Top" Height="20">
+                    <MenuItem Header="_File">
+                        <MenuItem Header="_Open"  Click="UploadFileButton_OnClick"/>
+                        <Separator />
+                        <MenuItem Header="_Exit" Click ="btnExitProgram_Click "  />
+                    </MenuItem>
+                    <MenuItem Header="About">
+                    </MenuItem>
+                </Menu>
+                <TextBox AcceptsReturn="True" />
+            </DockPanel>
+            <dragablz:TabablzControl Margin="0,18,0,0" ConsolidateOrphanedItems="True" Name="TabControl" ShowDefaultCloseButton="True" >
                 <dragablz:TabablzControl.InterTabController >
                     <dragablz:InterTabController Partition="{StaticResource Partition}" />
                 </dragablz:TabablzControl.InterTabController>

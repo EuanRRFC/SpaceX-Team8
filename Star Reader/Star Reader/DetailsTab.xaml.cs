@@ -62,6 +62,26 @@ namespace Star_Reader
             return packet.ErrorType != null && CultureInfo.CurrentCulture.CompareInfo.IndexOf(packet.ErrorType, filterString, CompareOptions.IgnoreCase) >= 0
                 || packet.Payload != null && CultureInfo.CurrentCulture.CompareInfo.IndexOf(packet.Payload, filterString, CompareOptions.IgnoreCase) >= 0;
         }
+        private void radioButtonErr_Checked(object sender, RoutedEventArgs e)
+        {
+
+            TextBox.IsEnabled = true;
+        }
+
+        private void radioButtonErr_Unchecked(object sender, RoutedEventArgs e)
+        {
+            TextBox.IsEnabled = false;
+        }
+
+        private void radioButtonPay_Checked(object sender, RoutedEventArgs e)
+        {
+            TextBox.IsEnabled = true;
+        }
+
+        private void radioButtonPay_Unchecked(object sender, RoutedEventArgs e)
+        {
+            TextBox.IsEnabled = false;
+        }
 
         public DetailsTab(int portNr)
         {
@@ -69,6 +89,7 @@ namespace Star_Reader
             PopulateOverview(portNr);
             DataGridCollection = CollectionViewSource.GetDefaultView(App.RecordingData[portNr].ListOfPackets);
             DataGridCollection.Filter = Filter;
+            TextBox.IsEnabled = false;
         }
 
         public void PopulateOverview(int portNr)
