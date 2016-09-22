@@ -194,6 +194,7 @@ namespace Star_Reader
                 {
                     Title = "Errors",
                     Values = new ChartValues<double>(),
+                    DataLabels = true,
                     LabelPoint = point => point.X + ""
                 },
                 new RowSeries
@@ -219,10 +220,10 @@ namespace Star_Reader
                 }
             };
 
-            radioButton.IsChecked = true;
+            DataRate.IsChecked = true;
         }
 
-        private void radioButton_Checked(object sender, RoutedEventArgs e)
+        private void DataRate_Checked(object sender, RoutedEventArgs e)
         {
             Graphing getPlots = new Graphing();
             List<double> plots = getPlots.getPlots(gData);
@@ -235,27 +236,31 @@ namespace Star_Reader
 
         }
 
-        private void radioButton_Unchecked(object sender, RoutedEventArgs e)
+        private void DataRate_Unchecked(object sender, RoutedEventArgs e)
         {
             SeriesCollection[0].Values.Clear();
         }
 
-        private void radioButton2_Checked(object sender, RoutedEventArgs e)
+        private void Errors_Checked(object sender, RoutedEventArgs e)
         {
             Graphing getBars = new Graphing();
             List<double> bars = getBars.getBars(gData);
-            for (int x = 0; x <bars.Count; x++)
-            {
-                SeriesCollection[1].Values.Add(bars[x]);
-                DataContext = this;
-            }
+            SeriesCollection[1].Values.Add(bars[0]);
+            SeriesCollection[2].Values.Add(bars[1]);
+            SeriesCollection[3].Values.Add(bars[2]);
+            SeriesCollection[4].Values.Add(bars[3]);
+            DataContext = this;
         }
 
-        private void radioButton2_Unchecked(object sender, RoutedEventArgs e)
+        private void Errors_Unchecked(object sender, RoutedEventArgs e)
         {
             SeriesCollection[1].Values.Clear();
+            SeriesCollection[2].Values.Clear();
+            SeriesCollection[3].Values.Clear();
+            SeriesCollection[4].Values.Clear();
         }
 
         public SeriesCollection SeriesCollection { get; set; }
+        public Func<double, string> Formatter { get; set; }
     }
 }

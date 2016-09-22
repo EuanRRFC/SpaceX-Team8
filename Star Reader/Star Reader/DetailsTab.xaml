@@ -92,8 +92,8 @@
         </lvc:CartesianChart>
 
         <Grid  Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="4">
-            <RadioButton x:Name="radioButton" Content="DataRate bytes per min" HorizontalAlignment="Left" Margin="20,0,0,40" VerticalAlignment="bottom" Checked="radioButton_Checked" Unchecked="radioButton_Unchecked"/>
-            <RadioButton x:Name="radioButton2" Content="Errors" HorizontalAlignment="Left" Margin="180,0,0,40" VerticalAlignment="bottom" Checked="radioButton2_Checked" Unchecked="radioButton2_Unchecked"/>
+            <RadioButton x:Name="DataRate" Content="DataRate bytes per min" HorizontalAlignment="Left" Margin="20,0,0,40" VerticalAlignment="bottom" Checked="DataRate_Checked" Unchecked="DataRate_Unchecked"/>
+            <RadioButton x:Name="Errors" Content="Errors" HorizontalAlignment="Left" Margin="180,0,0,40" VerticalAlignment="bottom" Checked="Errors_Checked" Unchecked="Errors_Unchecked"/>
         </Grid>
     </Grid>
 </TabItem>
