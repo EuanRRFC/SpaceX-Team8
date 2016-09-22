@@ -191,13 +191,11 @@ namespace Star_Reader
                     Title = "Errors",
                     Values = new ChartValues<double> {},
                     LabelPoint = point => point.X + ""
-                }
-            };
-
-            Labels = new[]
+                },
+                new RowSeries
                 {
-                    Title = "Pariyt",
-                    Values = new ChartValues<double>(),
+                    Title = "Parity",
+                    Values = new ChartValues<double> {},
                     DataLabels = true,
                     LabelPoint = point => point.X + ""
                 },
