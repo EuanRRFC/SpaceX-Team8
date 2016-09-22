@@ -63,6 +63,10 @@ namespace Star_Reader
                 }
             }
         }
+        private void btnExitProgram_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }
 
