@@ -24,17 +24,17 @@
             <WrapPanel Name="PacketViewerA" />
         </ScrollViewer>
         <StackPanel  Orientation="Horizontal" Grid.Row="2" Grid.Column="0">
-            <Rectangle Margin="5,5,0,120" Width="10" Height="10" Fill="#00dddd" Stroke="Black" StrokeThickness="2"></Rectangle>
+            <Rectangle Margin="5,5,0,208" Width="15" Height="15" Fill="#00dddd" Stroke="Black" StrokeThickness="2"></Rectangle>
             <TextBlock Text="-Valid packet" Margin="0,5,0,0"/>
-            <Rectangle Margin="5,5,0,120" Width="10" Height="10" Fill="White" Stroke="Black" StrokeThickness="2"></Rectangle>
+            <Rectangle Margin="5,5,0,208" Width="15" Height="15" Fill="White" Stroke="Black" StrokeThickness="2"></Rectangle>
             <TextBlock Text="-Empty space" Margin="0,5,0,0"/>
-            <Rectangle Margin="5,5,0,120" Width="10" Height="10" Fill="#ffe699" Stroke="Black" StrokeThickness="2"></Rectangle>
+            <Rectangle Margin="5,5,0,208" Width="15" Height="15" Fill="#ffe699" Stroke="Black" StrokeThickness="2"></Rectangle>
             <TextBlock Text="-Empty space over 1 second" Margin="0,5,0,0"/>
-            <Rectangle Margin="5,5,0,120" Width="10" Height="10" Fill="Crimson" Stroke="Black" StrokeThickness="2"></Rectangle>
+            <Rectangle Margin="5,5,0,208" Width="15" Height="15" Fill="#ff3333" Stroke="Black" StrokeThickness="2"></Rectangle>
             <TextBlock Text="-Disconnect error" Margin="0,5,0,0"/>
-            <Rectangle Margin="5,5,0,120" Width="10" Height="10" Fill="Yellow" Stroke="Black" StrokeThickness="2"></Rectangle>
+            <Rectangle Margin="5,5,0,208" Width="15" Height="15" Fill="Yellow" Stroke="Black" StrokeThickness="2"></Rectangle>
             <TextBlock Text="-Parity error" Margin="0,5,0,0"/>
-            <Rectangle Margin="5,5,0,120" Width="10" Height="10" Fill="#ffaacc" Stroke="Black" StrokeThickness="2"></Rectangle>
+            <Rectangle Margin="5,5,0,208" Width="15" Height="15" Fill="#ffaacc" Stroke="Black" StrokeThickness="2"></Rectangle>
             <TextBlock Text="-Packet not send" Margin="0,5,0,0"/>
         </StackPanel>
 
@@ -65,7 +65,7 @@
                     <Style TargetType="DataGridCell">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ErrorType}" Value="Disconnect">
-                                <Setter Property="Background" Value="Red"/>
+                                <Setter Property="Background" Value="#ff3333"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding ErrorType}" Value="Parity">
                                 <Setter Property="Background" Value="Yellow"/>
