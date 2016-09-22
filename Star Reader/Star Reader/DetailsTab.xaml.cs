@@ -50,7 +50,10 @@ namespace Star_Reader
 
         private void FilterCollection()
         {
-            dataGridCollection.Refresh();
+            if (dataGridCollection != null)
+            {
+                dataGridCollection.Refresh();
+            }
         }
 
         public bool Filter(object obj)
@@ -61,26 +64,6 @@ namespace Star_Reader
             return packet.ErrorType != null && CultureInfo.CurrentCulture.CompareInfo.IndexOf(packet.ErrorType, filterString, CompareOptions.IgnoreCase) >= 0
                 || packet.Payload != null && CultureInfo.CurrentCulture.CompareInfo.IndexOf(packet.Payload, filterString, CompareOptions.IgnoreCase) >= 0;
         }
-        private void radioButtonErr_Checked(object sender, RoutedEventArgs e)
-        {
-
-            TextBox.IsEnabled = true;
-        }
-
-        private void radioButtonErr_Unchecked(object sender, RoutedEventArgs e)
-        {
-            TextBox.IsEnabled = false;
-        }
-
-        private void radioButtonPay_Checked(object sender, RoutedEventArgs e)
-        {
-            TextBox.IsEnabled = true;
-        }
-
-        private void radioButtonPay_Unchecked(object sender, RoutedEventArgs e)
-        {
-            TextBox.IsEnabled = false;
-        }
 
         public DetailsTab(int portNr)
         {
@@ -88,7 +71,6 @@ namespace Star_Reader
             PopulateOverview(portNr);
             DataGridCollection = CollectionViewSource.GetDefaultView(App.RecordingData[portNr].ListOfPackets);
             DataGridCollection.Filter = Filter;
-            TextBox.IsEnabled = false;
         }
 
         public void PopulateOverview(int portNr)
@@ -124,7 +106,7 @@ namespace Star_Reader
                             case 3:
                             case 4:
                                 btn1s.ToolTip = "Empty Space of " + td.Seconds + "." + td.TotalMilliseconds.ToString().Substring(1) + " seconds.";
-                                btn1s.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffe699"));  // Beige
+                                btn1s.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#ffe699");  // Beige
                                 break;
                             default:
                                 btn1s.ToolTip = "Empty Space of " + td.Seconds + "." + td.TotalMilliseconds.ToString().Substring(1) + " seconds.";
@@ -160,19 +142,19 @@ namespace Star_Reader
                 {
                     if (p.PacketEnd.Equals("EOP"))
                     {
-                        btn1.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#00dddd"));   // Blue
+                        btn1.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#00dddd");   // Blue
                         btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
                     }
                     else
                         if (p.PacketEnd.Equals("EEP"))
-                        {
-                            btn1.Background = Brushes.Red;
-                            btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
-                            btn1.Content = p.PacketEnd[0];
-                        }
-                        else
                     {
-                        btn1.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffaacc"));   // Pink
+                        btn1.Background = Brushes.Red;
+                        btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
+                        btn1.Content = p.PacketEnd[0];
+                    }
+                    else
+                    {
+                        btn1.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#ffaacc");   // Pink
                         btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
                     }
                 }
@@ -181,7 +163,7 @@ namespace Star_Reader
                 PacketViewerA.Children.Add(btn1);
             }
             gData = r;
-            initialiseGraphs();
+            InitialiseGraphs();
         }
         protected void btn_click(object sender, EventArgs e)
         {
@@ -194,39 +176,40 @@ namespace Star_Reader
             DetailedViewerA.SelectedItem = App.RecordingData[port].ListOfPackets[item];
         }
 
-        private void initialiseGraphs() {
+        private void InitialiseGraphs()
+        {
             SeriesCollection = new SeriesCollection
             {
                 new LineSeries
                 {
                     Title = "Data rate B/m",
-                    Values = new ChartValues<double> {}
+                    Values = new ChartValues<double>()
                 },
                 new RowSeries
                 {
                     Title = "Disconnect",
-                    Values = new ChartValues<double> {},
+                    Values = new ChartValues<double>(),
                     DataLabels = true,
                     LabelPoint = point => point.X + ""
                 },
                 new RowSeries
                 {
                     Title = "Pariyt",
-                    Values = new ChartValues<double> {},
+                    Values = new ChartValues<double>(),
                     DataLabels = true,
                     LabelPoint = point => point.X + ""
                 },
                 new RowSeries
                 {
                     Title = "EEP",
-                    Values = new ChartValues<double> {},
+                    Values = new ChartValues<double>(),
                     DataLabels = true,
                     LabelPoint = point => point.X + ""
                 },
                 new RowSeries
                 {
                     Title = "Total Errors",
-                    Values = new ChartValues<double> {},
+                    Values = new ChartValues<double>(),
                     DataLabels = true,
                     LabelPoint = point => point.X + ""
                 }
@@ -239,7 +222,7 @@ namespace Star_Reader
         {
             Graphing getPlots = new Graphing();
             List<double> plots = getPlots.getPlots(gData);
-            for(int x = 0; x < plots.Count; x++)
+            for (int x = 0; x < plots.Count; x++)
             {
                 Console.WriteLine(plots[x]);
                 SeriesCollection[0].Values.Add(plots[x]);
@@ -257,7 +240,7 @@ namespace Star_Reader
         {
             Graphing getBars = new Graphing();
             List<double> bars = getBars.getBars(gData);
-                SeriesCollection[1].Values.Add(bars[0]);
+            SeriesCollection[1].Values.Add(bars[0]);
             SeriesCollection[2].Values.Add(bars[1]);
             SeriesCollection[3].Values.Add(bars[2]);
             SeriesCollection[4].Values.Add(bars[3]);
