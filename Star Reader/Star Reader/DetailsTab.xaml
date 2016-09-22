@@ -15,17 +15,19 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <ScrollViewer BorderThickness="25" Grid.Row="0" Grid.Column="0" >
             <WrapPanel Name="PacketViewerA" />
         </ScrollViewer>
-        <DataGrid Grid.RowSpan="2" Grid.Column="1" Name="DetailedViewerA" >
+        <DataGrid Grid.RowSpan="3" Grid.Column="1" Name="DetailedViewerA" >
         </DataGrid>
-        <lvc:CartesianChart Grid.Row="1" Grid.ColumnSpan="1" >
-                <lvc:CartesianChart.Series>
-                <lvc:LineSeries Values="{Binding Values1}" StrokeThickness="2" Fill="Transparent" />
-            </lvc:CartesianChart.Series>
-            </lvc:CartesianChart>
+        <lvc:CartesianChart ScrollBarFill="Transparent"  Grid.Row="1" Grid.ColumnSpan="1" Series="{Binding SeriesCollection}" >
+        </lvc:CartesianChart>
+        <DockPanel Grid.Row="2" Grid.ColumnSpan="1">
+            <RadioButton x:Name="DataRate" Content="DataRate Bytes/Min" HorizontalAlignment="Left" Margin="10,0,0,10"  VerticalAlignment="Bottom" Unchecked="DataRate_Unchecked" Checked="DataRate_Checked" />
+            <RadioButton x:Name="ErrorBars" Content="Errors" HorizontalAlignment="Left" Margin="40,0,0,10"  VerticalAlignment="Bottom" Checked="ErrorBars_Checked" Unchecked="ErrorBars_Unchecked" />
+        </DockPanel>
     </Grid>
 </TabItem>
 

@@ -18,6 +18,7 @@ using System.Windows.Forms;
 using Button = System.Windows.Controls.Button;
 using Color = System.Drawing.Color;
 using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace Star_Reader
 {
@@ -26,9 +27,7 @@ namespace Star_Reader
     /// </summary>
     public partial class DetailsTab : TabItem
     {
-
-
-        public ChartValues<double> Values1 { get; set; }
+        private Recording gData;
 
         public DetailsTab(int portNr)
         {
@@ -37,9 +36,11 @@ namespace Star_Reader
             PopulateDataGrid(portNr);
         }
 
+
+
         public void Refresh(int portNr)
         {
-          
+
         }
 
         public void PopulateDataGrid(int portNr)
@@ -51,7 +52,7 @@ namespace Star_Reader
             //    //switch ((string)row.Item["ErrorType"].Value)
             //    //{
             //    //    case "E":
-                       
+
             //    //        break;
             //    //    case "EOP":
             //    //        row.Background = Brushes.Blue;
@@ -74,11 +75,11 @@ namespace Star_Reader
             for (int i = 0; i < length; i++)
             {
                 Packet p = r.ListOfPackets[i];
-                if(i>0)
+                if (i > 0)
                 {
                     Packet NextP = r.ListOfPackets[i - 1];
                     TimeSpan td = p.Time.Subtract(NextP.Time);
-                    if(td.TotalMilliseconds > 100)
+                    if (td.TotalMilliseconds > 100)
                     {
                         Button btn1s = new Button();
                         btn1s.Width = size;
@@ -103,7 +104,7 @@ namespace Star_Reader
                                 break;
                         }
                         PacketViewerA.Children.Add(btn1s);
-                        
+
                     }
                 }
                 Button btn1 = new Button
@@ -122,31 +123,98 @@ namespace Star_Reader
                     if (p.PacketEnd.Equals("EOP"))
                     {
                         btn1.Background = Brushes.Blue;
-                        btn1.ToolTip = p.Time +"."+p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload +"\n" + p.PacketEnd;
+                        btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
                     }
                     else
                     {
                         btn1.Background = Brushes.Orange;
-                        btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType+ "\n" + p.Payload +"\n" + p.PacketEnd;
+                        btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
                     }
                 }
                 btn1.Click += new RoutedEventHandler(btn_click);
-                btn1.Tag = (portNr +""+ i);
+                btn1.Tag = (portNr + "" + i);
                 PacketViewerA.Children.Add(btn1);
             }
-            Values1 = new ChartValues<double> { 3, 4, 6, 3, 2, 6 };
-            DataContext = this;
+
+            gData = r;
+            drawGraph();
+
+
+
         }
+
         protected void btn_click(object sender, EventArgs e)
         {
-            Button b = (Button) sender;
+            Button b = (Button)sender;
             string x = b.Tag.ToString();
             char portc = x[0];
-            int port = Int32.Parse(portc+"");
+            int port = Int32.Parse(portc + "");
             int item = Int32.Parse(x.Substring(1));
             DetailedViewerA.ScrollIntoView(App.RecordingData[port].ListOfPackets[item]);
 
-            
+
+        }
+
+        private void drawGraph()
+        {
+
+            SeriesCollection = new SeriesCollection{
+            new LineSeries
+                {
+                    Title = "Series 1",
+                    Values = new ChartValues<double> {}
+                },
+            new RowSeries
+                {
+                    Title = "Series 2",
+                    Values = new ChartValues<double> {},
+                    DataLabels = true,
+                    LabelPoint = point => point.X + ""
+                }
+            };
+
+            Labels = new[] { "Disconnect", "Parity", "EEP", "Error" };
+            Formatter = val => val.ToString("P");
+
+            //DataRate.IsChecked = true;
+        }
+
+        public SeriesCollection SeriesCollection { get; set; }
+        public string[] Labels { get; set; }
+        public Func<double, string> Formatter { get; set; }
+
+        private void DataRate_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SeriesCollection[0].Values.Clear();
+        }
+
+        private void DataRate_Checked(object sender, RoutedEventArgs e)
+        {
+
+            Graphing graphPlots = new Graphing();
+            graphPlots.getPlots(gData);
+            List<double> plots = graphPlots.getPlots(gData);
+            for (int x = 0; x < plots.Count; x++)
+            {
+                SeriesCollection[0].Values.Add(plots[x]);
+                DataContext = this;
+            }
+        }
+
+        private void ErrorBars_Checked(object sender, RoutedEventArgs e)
+        {
+            Graphing graphPlots = new Graphing();
+            List<double> bars = graphPlots.getBars(gData);
+            for (int x = 0; x < bars.Count; x++)
+            {
+                SeriesCollection[1].Values.Add(bars[x]);
+                DataContext = this;
+            }
+        }
+
+        private void ErrorBars_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SeriesCollection[1].Values.Clear();
         }
     }
 }
