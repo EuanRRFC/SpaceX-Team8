@@ -57,14 +57,17 @@ namespace Star_Reader.Model
                 {
                     case "Disconnect":
                         DC++;
+                        Errors++;
                         break;
                     case "Parity":
                         Parity++;
+                        Errors++;
                         break;
                     case "EEP":
                         EEPs++;
+                        Errors++;
                         break;
-                    case "E":
+                    case "Error":
                         Errors++;
                         break;
                     default:
@@ -76,14 +79,17 @@ namespace Star_Reader.Model
                 {
                     case "Disconnect":
                         DC++;
+                        Errors++;
                         break;
                     case "Parity":
                         Parity++;
+                        Errors++;
                         break;
                     case "EEP":
                         EEPs++;
+                        Errors++;
                         break;
-                    case "E":
+                    case "Error":
                         Errors++;
                         break;
                     default:
