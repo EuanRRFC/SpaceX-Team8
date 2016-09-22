@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Globalization;
 using LiveCharts.Wpf;
 using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace Star_Reader
 {
@@ -159,7 +160,7 @@ namespace Star_Reader
                         btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
                     }
                 }
-                btn1.Click += new RoutedEventHandler(btn_click);
+                btn1.Click += btn_click;
                 btn1.Tag = portNr + "" + i;
                 PacketViewerA.Children.Add(btn1);
             }
@@ -175,6 +176,9 @@ namespace Star_Reader
             int item = int.Parse(x.Substring(1));
             DetailedViewerA.ScrollIntoView(App.RecordingData[port].ListOfPackets[item]);
             DetailedViewerA.SelectedItem = App.RecordingData[port].ListOfPackets[item];
+            var selectedRow = (DataGridRow)DetailedViewerA.ItemContainerGenerator.ContainerFromIndex(DetailedViewerA.SelectedIndex);
+            FocusManager.SetIsFocusScope(selectedRow, true);
+            FocusManager.SetFocusedElement(selectedRow, selectedRow);
         }
 
         private void InitialiseGraphs()
@@ -189,14 +193,14 @@ namespace Star_Reader
                 new RowSeries
                 {
                     Title = "Errors",
-                    Values = new ChartValues<double> {},
+                    Values = new ChartValues<double>(),
                     DataLabels = true,
                     LabelPoint = point => point.X + ""
                 },
                 new RowSeries
                 {
                     Title = "Parity",
-                    Values = new ChartValues<double> {},
+                    Values = new ChartValues<double>(),
                     DataLabels = true,
                     LabelPoint = point => point.X + ""
                 },
