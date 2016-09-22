@@ -21,6 +21,7 @@ namespace Star_Reader
 
         private ICollectionView dataGridCollection;
         private string filterString;
+        public string[] Labels { get; set; }
 
         public ICollectionView DataGridCollection
         {
@@ -145,7 +146,7 @@ namespace Star_Reader
                     switch (p.ErrorType)
                     {
                         case "Disconnect":
-                            btn1.Background = Brushes.Red;
+                            btn1.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ff3333"));
                             btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.ErrorType;
                             btn1.Content = p.ErrorType[0];
                             break;
@@ -166,8 +167,8 @@ namespace Star_Reader
                     else
                         if (p.PacketEnd.Equals("EEP"))
                         {
-                            btn1.Background = Brushes.Red;
-                            btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
+                            btn1.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ff3333"));
+                        btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
                             btn1.Content = p.PacketEnd[0];
                         }
                         else
@@ -204,33 +205,17 @@ namespace Star_Reader
                 },
                 new RowSeries
                 {
-                    Title = "Disconnect",
+                    Title = "Errors",
                     Values = new ChartValues<double> {},
-                    DataLabels = true,
-                    LabelPoint = point => point.X + ""
-                },
-                new RowSeries
-                {
-                    Title = "Pariyt",
-                    Values = new ChartValues<double> {},
-                    DataLabels = true,
-                    LabelPoint = point => point.X + ""
-                },
-                new RowSeries
-                {
-                    Title = "EEP",
-                    Values = new ChartValues<double> {},
-                    DataLabels = true,
-                    LabelPoint = point => point.X + ""
-                },
-                new RowSeries
-                {
-                    Title = "Total Errors",
-                    Values = new ChartValues<double> {},
-                    DataLabels = true,
                     LabelPoint = point => point.X + ""
                 }
             };
+
+            Labels = new[]
+                {
+                    "Test1",
+                    "Test2"
+                };
 
             radioButton.IsChecked = true;
         }
@@ -257,11 +242,11 @@ namespace Star_Reader
         {
             Graphing getBars = new Graphing();
             List<double> bars = getBars.getBars(gData);
-                SeriesCollection[1].Values.Add(bars[0]);
-            SeriesCollection[2].Values.Add(bars[1]);
-            SeriesCollection[3].Values.Add(bars[2]);
-            SeriesCollection[4].Values.Add(bars[3]);
-            DataContext = this;
+            for (int x = 0; x <bars.Count; x++)
+            {
+                SeriesCollection[1].Values.Add(bars[x]);
+                DataContext = this;
+            }
         }
 
         private void radioButton2_Unchecked(object sender, RoutedEventArgs e)
@@ -270,7 +255,5 @@ namespace Star_Reader
         }
 
         public SeriesCollection SeriesCollection { get; set; }
-        public string[] Labels { get; set; }
-        public Func<double, string> Formatter { get; set; }
     }
 }
