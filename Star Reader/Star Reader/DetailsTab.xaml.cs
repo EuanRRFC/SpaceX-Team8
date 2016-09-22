@@ -211,7 +211,7 @@ namespace Star_Reader
                 },
                 new RowSeries
                 {
-                    Title = "Pariyt",
+                    Title = "Parity",
                     Values = new ChartValues<double> {},
                     DataLabels = true,
                     LabelPoint = point => point.X + ""
