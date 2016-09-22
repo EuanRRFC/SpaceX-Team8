@@ -178,12 +178,12 @@ namespace Star_Reader
             {
                 new LineSeries
                 {
-                    Title = "Series 1",
+                    Title = "DataRate",
                     Values = new ChartValues<double> {}
                 },
                 new RowSeries
                 {
-                    Title = "Series 2",
+                    Title = "Errors",
                     Values = new ChartValues<double> {},
                     LabelPoint = point => point.X + ""
                 }
