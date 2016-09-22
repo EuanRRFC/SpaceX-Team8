@@ -190,6 +190,7 @@ namespace Star_Reader
                 {
                     Title = "Errors",
                     Values = new ChartValues<double> {},
+                    DataLabels = true,
                     LabelPoint = point => point.X + ""
                 },
                 new RowSeries
@@ -240,11 +241,11 @@ namespace Star_Reader
         {
             Graphing getBars = new Graphing();
             List<double> bars = getBars.getBars(gData);
-            for (int x = 0; x <bars.Count; x++)
-            {
-                SeriesCollection[1].Values.Add(bars[x]);
-                DataContext = this;
-            }
+            SeriesCollection[1].Values.Add(bars[0]);
+            SeriesCollection[2].Values.Add(bars[1]);
+            SeriesCollection[3].Values.Add(bars[2]);
+            SeriesCollection[4].Values.Add(bars[3]);
+            DataContext = this;
         }
 
         private void radioButton2_Unchecked(object sender, RoutedEventArgs e)
@@ -253,5 +254,6 @@ namespace Star_Reader
         }
 
         public SeriesCollection SeriesCollection { get; set; }
+        public Func<double, string> Formatter { get; set; }
     }
 }
