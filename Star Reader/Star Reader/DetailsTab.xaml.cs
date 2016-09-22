@@ -21,6 +21,7 @@ namespace Star_Reader
 
         private ICollectionView dataGridCollection;
         private string filterString;
+        public string[] Labels { get; set; }
 
         public ICollectionView DataGridCollection
         {
@@ -178,16 +179,22 @@ namespace Star_Reader
             {
                 new LineSeries
                 {
-                    Title = "Series 1",
+                    Title = "Data rate B/m",
                     Values = new ChartValues<double> {}
                 },
                 new RowSeries
                 {
-                    Title = "Series 2",
+                    Title = "Errors",
                     Values = new ChartValues<double> {},
                     LabelPoint = point => point.X + ""
                 }
             };
+
+            Labels = new[]
+                {
+                    "Test1",
+                    "Test2"
+                };
 
             radioButton.IsChecked = true;
         }
