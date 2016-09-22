@@ -27,7 +27,7 @@ namespace Star_Reader.Model
                     if (currentPacket.Payload != null)
                     {
                         string removeWhitespace = currentPacket.Payload.Replace(" ", "");
-                        dataRatePerMinute += removeWhitespace.Length;
+                        dataRatePerMinute += (removeWhitespace.Length/2);
                     }
                     currentPacket = r.ListOfPackets[increment];
                     increment++;

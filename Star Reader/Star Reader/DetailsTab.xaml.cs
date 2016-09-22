@@ -229,7 +229,6 @@ namespace Star_Reader
             List<double> plots = getPlots.getPlots(gData);
             for (int x = 0; x < plots.Count; x++)
             {
-                Console.WriteLine(plots[x]);
                 SeriesCollection[0].Values.Add(plots[x]);
                 DataContext = this;
             }
