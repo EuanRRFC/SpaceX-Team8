@@ -146,12 +146,13 @@ namespace Star_Reader
                     switch (p.ErrorType)
                     {
                         case "Disconnect":
-                            btn1.Background = Brushes.Red;
+                            btn1.Background = Brushes.Yellow;
                             btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.ErrorType;
                             btn1.Content = p.ErrorType[0];
                             break;
                         case "Parity":
-                            btn1.Background = Brushes.Yellow;
+
+                            btn1.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom(" #ff3333"));  // Red
                             btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.ErrorType;
                             btn1.Content = p.ErrorType[0];
                             break;

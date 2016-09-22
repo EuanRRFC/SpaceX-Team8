@@ -6,13 +6,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-         Height="720" Width="1280">
+         Height="720" Width="1280" >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <!--Add/remove rows here to update left side-->
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -28,6 +29,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <!--Add/remove rows here to update right side-->
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
@@ -47,10 +49,10 @@
                     <Style TargetType="DataGridCell">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ErrorType}" Value="Disconnect">
-                                <Setter Property="Background" Value="Red"/>
+                                <Setter Property="Background" Value="Yellow"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding ErrorType}" Value="Parity">
-                                <Setter Property="Background" Value="Yellow"/>
+                                <Setter Property="Background" Value="#ff3333"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding PacketEnd}" Value="EOP">
                                 <Setter Property="Background" Value="#00dddd"/>
