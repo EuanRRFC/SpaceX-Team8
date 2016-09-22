@@ -216,10 +216,10 @@ namespace Star_Reader
                 }
             };
 
-            radioButton.IsChecked = true;
+            DataRate.IsChecked = true;
         }
 
-        private void radioButton_Checked(object sender, RoutedEventArgs e)
+        private void DataRate_Checked(object sender, RoutedEventArgs e)
         {
             Graphing getPlots = new Graphing();
             List<double> plots = getPlots.getPlots(gData);
@@ -232,12 +232,12 @@ namespace Star_Reader
 
         }
 
-        private void radioButton_Unchecked(object sender, RoutedEventArgs e)
+        private void DataRate_Unchecked(object sender, RoutedEventArgs e)
         {
             SeriesCollection[0].Values.Clear();
         }
 
-        private void radioButton2_Checked(object sender, RoutedEventArgs e)
+        private void Errors_Checked(object sender, RoutedEventArgs e)
         {
             Graphing getBars = new Graphing();
             List<double> bars = getBars.getBars(gData);
@@ -248,9 +248,12 @@ namespace Star_Reader
             DataContext = this;
         }
 
-        private void radioButton2_Unchecked(object sender, RoutedEventArgs e)
+        private void Errors_Unchecked(object sender, RoutedEventArgs e)
         {
             SeriesCollection[1].Values.Clear();
+            SeriesCollection[2].Values.Clear();
+            SeriesCollection[3].Values.Clear();
+            SeriesCollection[4].Values.Clear();
         }
 
         public SeriesCollection SeriesCollection { get; set; }
