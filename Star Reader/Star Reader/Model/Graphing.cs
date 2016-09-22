@@ -17,7 +17,7 @@ namespace Star_Reader.Model
             Packet currentPacket = r.ListOfPackets[0];
             DateTime interval = currentPacket.Time;
             Packet end = r.ListOfPackets[r.ListOfPackets.Count - 1];
-            int y = 1;
+            int increment = 1;
 
             for (int x = 0; x < r.ListOfPackets.Count - 1; x++)
             {
@@ -26,10 +26,11 @@ namespace Star_Reader.Model
                 {
                     if (currentPacket.Payload != null)
                     {
-                        dataRatePerMinute += currentPacket.Payload.Length;
+                        string removeWhitespace = currentPacket.Payload.Replace(" ", "");
+                        dataRatePerMinute += removeWhitespace.Length;
                     }
-                    currentPacket = r.ListOfPackets[y];
-                    y++;
+                    currentPacket = r.ListOfPackets[increment];
+                    increment++;
                 } while (currentPacket.Time <= interval);
 
                 plot.Add(dataRatePerMinute);
