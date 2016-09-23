@@ -30,14 +30,14 @@ namespace Star_Reader.Model
             }
             
         }
-        public ChartValues<double>  getDataRates()
+        public List<double>  getDataRates()
         {
             int timeInterval = 60;
             TimeSpan RecordingLength = getDurationOfRecording();
             DateTime DataStartPoint = PacketStartTime;
             DateTime DataEndPoint = PacketStartTime.AddSeconds(timeInterval);
             int seconds = (int) Math.Round(RecordingLength.TotalSeconds / timeInterval);
-            ChartValues<double> datarate = new ChartValues<double>();
+            List<double> datarate = new List<double>();
             for(int i=0;i<seconds;i++)
             {
                 DataStartPoint = DataStartPoint.AddSeconds(timeInterval);
