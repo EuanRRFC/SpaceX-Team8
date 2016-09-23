@@ -23,9 +23,7 @@ namespace Star_Reader
         private ICollectionView dataGridCollection;
         private string filterString;
         public string[] Labels { get; set; }
-        public string errorNumb;
-        public string dataCharsNumb;
-        public string packetNumb;
+
 
         public ICollectionView DataGridCollection
         {
