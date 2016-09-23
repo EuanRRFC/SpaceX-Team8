@@ -23,6 +23,9 @@ namespace Star_Reader
         private ICollectionView dataGridCollection;
         private string filterString;
         public string[] Labels { get; set; }
+        
+
+
 
         public ICollectionView DataGridCollection
         {
@@ -67,16 +70,22 @@ namespace Star_Reader
                 || packet.Payload != null && CultureInfo.CurrentCulture.CompareInfo.IndexOf(packet.Payload, filterString, CompareOptions.IgnoreCase) >= 0;
         }
 
+        //Constructor
         public DetailsTab(int portNr)
         {
             InitializeComponent();
             PopulateOverview(portNr);
             DataGridCollection = CollectionViewSource.GetDefaultView(App.RecordingData[portNr].ListOfPackets);
             DataGridCollection.Filter = Filter;
+            InitialiseTimeStamps();
+            initialiseGauge();
+
+
         }
 
+        //generating the button in the overview
         public void PopulateOverview(int portNr)
-        {
+        { 
             const int size = 20;
             var r = App.RecordingData[portNr];
             if (r == null) return;
@@ -167,7 +176,9 @@ namespace Star_Reader
             }
             gData = r;
             InitialiseGraphs();
-        }
+        }//End of PopulateOverview
+
+        //on click for buttons in overview
         protected void btn_click(object sender, EventArgs e)
         {
             Button b = (Button)sender;
@@ -182,6 +193,7 @@ namespace Star_Reader
             FocusManager.SetFocusedElement(selectedRow, selectedRow);
         }
 
+        //InitialiseGraphs on right of screen
         private void InitialiseGraphs()
         {
             SeriesCollection = new SeriesCollection
@@ -222,12 +234,13 @@ namespace Star_Reader
             };
 
             DataRate.IsChecked = true;
-        }
+        }//End of InitialiseGraphs
 
         private void DataRate_Checked(object sender, RoutedEventArgs e)
         {
             Graphing getPlots = new Graphing();
-            List<double> plots = getPlots.getPlots(gData);
+
+            List<double> plots = gData.getDataRates();//getPlots.getPlots(gData);
             for (int x = 0; x < plots.Count; x++)
             {
                 SeriesCollection[0].Values.Add(plots[x]);
@@ -262,5 +275,105 @@ namespace Star_Reader
 
         public SeriesCollection SeriesCollection { get; set; }
         public Func<double, string> Formatter { get; set; }
+
+
+
+       private void initialiseGauge()
+        {
+            
+          
+            errValue = gData.ErrorsPresent;
+            packetValue = gData.ListOfPackets.Count;
+            charValue = gData.getTotalPackets();
+
+            Formatter = x => x + " ";
+
+            DataContext = this;
+
+        }
+        public double errValue { get; set; }
+
+        public double packetValue { get; set; }
+        
+        public double charValue { get; set; }
+       
+        /*
+         * Initialise the time stamps for the left side of the overview.
+         * Coordinates for the buttons are all 0.
+         * Width of the parent is also 0.
+         * So couldn't impliment it as we need to know what packet is the left most packet.
+         * Cannot do this without width or coordinates.
+         * Still researching is there is another way.
+         * For the moment it just displays the time stamp of the first packet.
+         */
+        public void InitialiseTimeStamps()
+        {
+            //InitialLabel.Margin = new Thickness(0, 0, 0, 0); //Left, top, right, bottom
+
+
+
+            //int childrenCount = VisualTreeHelper.GetChildrenCount(TimeStamps);
+            //UIElement contain = VisualTreeHelper.GetChild(TimeStamps, childrenCount - 1) as UIElement;
+            //UIElement container = VisualTreeHelper.GetParent(contain) as UIElement;
+            //Point relativeLocation = contain.TranslatePoint(new Point(0, yPlus), container);
+
+
+
+
+            //int childrenCount2 = VisualTreeHelper.GetChildrenCount(TimeStamps);
+
+            Button contain2 = VisualTreeHelper.GetChild(PacketViewerA, 0) as Button;
+            //UIElement container2 = VisualTreeHelper.GetParent(contain2) as UIElement;
+            //Point relativeLocation = contain2.TranslatePoint(new Point(0, yPlus), container2);
+            //var relativeLocation2 = contain2.TransformToAncestor(this);
+
+            //string str = null;
+            //str = contain2.ToolTip as string;
+            //if (str.Contains("P") == true) //ignore the button if it is an error or an "empty space" button
+            //{
+            // Return the offset vector for the TextBlock object.
+            //Vector vector = VisualTreeHelper.GetOffset(contain2);
+            // Convert the vector to a point value.
+            //Point currentPoint = new Point(vector.X, vector.Y);
+
+            /*UIElement firstItem = ((PacketViewerA.Children)[0] as UIElement);
+            double y = firstItem.TranslatePoint(new Point(0, 0), PacketViewerA).Y;
+
+            int counter = 0;
+            foreach (UIElement item in PacketViewerA.Children)
+            {
+                if ((item.TranslatePoint(new Point(0, 0), PacketViewerA).Y != y))
+                {
+                    break;
+                }
+                counter++;
+            }*/
+
+            //double width = PacketViewerA.ActualWidth;
+            //double width = blah.ActualWidth;
+
+            string str2 = null;
+            str2 = contain2.ToolTip as string;
+
+            Label Lbl1 = new Label
+            {
+                Height = 20,
+                FontSize = 9,
+                //Content = contain2.ToolTip
+                Content = str2.Substring(11, 12)
+                //Content = width
+            };
+
+           // TimeStamps.Children.Add(Lbl1);
+            //}
+            //else
+            //{
+            //do nothing
+            //}
+
+
+
+        }//End of InitialiseTimeStamps
+
     }
 }
