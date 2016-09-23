@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LiveCharts;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,14 +37,14 @@ namespace Star_Reader.Model
             DateTime DataStartPoint = PacketStartTime;
             DateTime DataEndPoint = PacketStartTime.AddSeconds(timeInterval);
             int seconds = (int) Math.Round(RecordingLength.TotalSeconds / timeInterval);
-            ChartValues<double> datarate = new ChartValues<double> { };
+            ChartValues<double> datarate = new ChartValues<double>();
             for(int i=0;i<seconds;i++)
             {
                 DataStartPoint = DataStartPoint.AddSeconds(timeInterval);
                 DataEndPoint = DataEndPoint.AddSeconds(timeInterval);
                 Console.WriteLine(i);
                 int packets = 0;
-                for(int j=0;j<ListOfPackets.Count();j++)
+                for(int j=0;j<ListOfPackets.Count;j++)
                 {
                     TimeSpan a = ListOfPackets[j].Time.Subtract(DataStartPoint);
                     TimeSpan b = DataEndPoint.Subtract(ListOfPackets[j].Time);

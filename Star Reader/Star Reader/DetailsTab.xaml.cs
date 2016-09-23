@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Globalization;
 using LiveCharts.Wpf;
 using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace Star_Reader
 {
@@ -21,6 +22,7 @@ namespace Star_Reader
 
         private ICollectionView dataGridCollection;
         private string filterString;
+        public string[] Labels { get; set; }
 
         public ICollectionView DataGridCollection
         {
@@ -50,7 +52,10 @@ namespace Star_Reader
 
         private void FilterCollection()
         {
-            dataGridCollection.Refresh();
+            if (dataGridCollection != null)
+            {
+                dataGridCollection.Refresh();
+            }
         }
 
         public bool Filter(object obj)
@@ -103,7 +108,7 @@ namespace Star_Reader
                             case 3:
                             case 4:
                                 btn1s.ToolTip = "Empty Space of " + td.Seconds + "." + td.TotalMilliseconds.ToString().Substring(1) + " seconds.";
-                                btn1s.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffe699"));  // Beige
+                                btn1s.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#ffe699");  // Beige
                                 break;
                             default:
                                 btn1s.ToolTip = "Empty Space of " + td.Seconds + "." + td.TotalMilliseconds.ToString().Substring(1) + " seconds.";
@@ -124,12 +129,13 @@ namespace Star_Reader
                     switch (p.ErrorType)
                     {
                         case "Disconnect":
-                            btn1.Background = Brushes.Red;
+                            btn1.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ff3333"));
                             btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.ErrorType;
                             btn1.Content = p.ErrorType[0];
                             break;
                         case "Parity":
-                            btn1.Background = Brushes.Yellow;
+
+                            btn1.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom(" #ff3333"));  // Red
                             btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.ErrorType;
                             btn1.Content = p.ErrorType[0];
                             break;
@@ -139,28 +145,28 @@ namespace Star_Reader
                 {
                     if (p.PacketEnd.Equals("EOP"))
                     {
-                        btn1.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#00dddd"));   // Blue
+                        btn1.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#00dddd");   // Blue
                         btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
                     }
                     else
                         if (p.PacketEnd.Equals("EEP"))
-                        {
-                            btn1.Background = Brushes.Red;
-                            btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
-                            btn1.Content = p.PacketEnd[0];
-                        }
-                        else
                     {
-                        btn1.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffaacc"));   // Pink
+                        btn1.Background = Brushes.Red;
+                        btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
+                        btn1.Content = p.PacketEnd[0];
+                    }
+                    else
+                    {
+                        btn1.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#ffaacc");   // Pink
                         btn1.ToolTip = p.Time + "." + p.Time.ToString("fff") + "\n" + p.PacketType + "\n" + p.Payload + "\n" + p.PacketEnd;
                     }
                 }
-                btn1.Click += new RoutedEventHandler(btn_click);
+                btn1.Click += btn_click;
                 btn1.Tag = portNr + "" + i;
                 PacketViewerA.Children.Add(btn1);
             }
             gData = r;
-            initialiseGraphs();
+            InitialiseGraphs();
         }
         protected void btn_click(object sender, EventArgs e)
         {
@@ -171,61 +177,90 @@ namespace Star_Reader
             int item = int.Parse(x.Substring(1));
             DetailedViewerA.ScrollIntoView(App.RecordingData[port].ListOfPackets[item]);
             DetailedViewerA.SelectedItem = App.RecordingData[port].ListOfPackets[item];
+            var selectedRow = (DataGridRow)DetailedViewerA.ItemContainerGenerator.ContainerFromIndex(DetailedViewerA.SelectedIndex);
+            FocusManager.SetIsFocusScope(selectedRow, true);
+            FocusManager.SetFocusedElement(selectedRow, selectedRow);
         }
 
-        private void initialiseGraphs() {
+        private void InitialiseGraphs()
+        {
             SeriesCollection = new SeriesCollection
             {
                 new LineSeries
                 {
-                    Title = "Series 1",
-                    Values = new ChartValues<double> {}
+                    Title = "Data rate B/m",
+                    Values = new ChartValues<double>()
                 },
                 new RowSeries
                 {
-                    Title = "Series 2",
-                    Values = new ChartValues<double> {},
+                    Title = "Errors",
+                    Values = new ChartValues<double>(),
+                    DataLabels = true,
+                    LabelPoint = point => point.X + ""
+                },
+                new RowSeries
+                {
+                    Title = "Parity",
+                    Values = new ChartValues<double>(),
+                    DataLabels = true,
+                    LabelPoint = point => point.X + ""
+                },
+                new RowSeries
+                {
+                    Title = "EEP",
+                    Values = new ChartValues<double>(),
+                    DataLabels = true,
+                    LabelPoint = point => point.X + ""
+                },
+                new RowSeries
+                {
+                    Title = "Total Errors",
+                    Values = new ChartValues<double>(),
+                    DataLabels = true,
                     LabelPoint = point => point.X + ""
                 }
             };
 
-            radioButton.IsChecked = true;
+            DataRate.IsChecked = true;
         }
 
-        private void radioButton_Checked(object sender, RoutedEventArgs e)
+        private void DataRate_Checked(object sender, RoutedEventArgs e)
         {
             Graphing getPlots = new Graphing();
             List<double> plots = getPlots.getPlots(gData);
-            for(int x = 0; x < plots.Count; x++)
+            for (int x = 0; x < plots.Count; x++)
             {
-                Console.WriteLine(plots[x]);
                 SeriesCollection[0].Values.Add(plots[x]);
                 DataContext = this;
             }
 
         }
 
-        private void radioButton_Unchecked(object sender, RoutedEventArgs e)
+        private void DataRate_Unchecked(object sender, RoutedEventArgs e)
         {
             SeriesCollection[0].Values.Clear();
         }
 
-        private void radioButton2_Checked(object sender, RoutedEventArgs e)
+        private void Errors_Checked(object sender, RoutedEventArgs e)
         {
             Graphing getBars = new Graphing();
             List<double> bars = getBars.getBars(gData);
-            for (int x = 0; x <bars.Count; x++)
-            {
-                SeriesCollection[1].Values.Add(bars[x]);
-                DataContext = this;
-            }
+            SeriesCollection[1].Values.Add(bars[0]);
+            SeriesCollection[2].Values.Add(bars[1]);
+            SeriesCollection[3].Values.Add(bars[2]);
+            SeriesCollection[4].Values.Add(bars[3]);
+            DataContext = this;
         }
 
-        private void radioButton2_Unchecked(object sender, RoutedEventArgs e)
+        private void Errors_Unchecked(object sender, RoutedEventArgs e)
         {
             SeriesCollection[1].Values.Clear();
+            SeriesCollection[2].Values.Clear();
+            SeriesCollection[3].Values.Clear();
+            SeriesCollection[4].Values.Clear();
         }
 
         public SeriesCollection SeriesCollection { get; set; }
+        public Func<double, string> Formatter { get; set; }
     }
 }
