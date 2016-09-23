@@ -16,17 +16,17 @@
         <Grid>
             <DockPanel>
                 <Menu DockPanel.Dock="Top" Height="20">
-                    <MenuItem Header="_File">
+                    <MenuItem Header="_File" Width="60" >
                         <MenuItem Header="_Open"  Click="UploadFileButton_OnClick"/>
                         <Separator />
                         <MenuItem Header="_Exit" Click ="btnExitProgram_Click "  />
                     </MenuItem>
-                    <MenuItem Header="About">
+                    <MenuItem Header="About" Height="20" Width="60">
                     </MenuItem>
                 </Menu>
                 <TextBox AcceptsReturn="True" />
             </DockPanel>
-            <dragablz:TabablzControl Margin="0,18,0,0" ConsolidateOrphanedItems="True" Name="TabControl" ShowDefaultCloseButton="True" >
+            <dragablz:TabablzControl Margin="0,20,0,0" ConsolidateOrphanedItems="True" Name="TabControl" ShowDefaultCloseButton="True" >
                 <dragablz:TabablzControl.InterTabController >
                     <dragablz:InterTabController Partition="{StaticResource Partition}" />
                 </dragablz:TabablzControl.InterTabController>

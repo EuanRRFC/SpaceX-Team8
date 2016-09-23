@@ -17,24 +17,52 @@ namespace Star_Reader.Model
             Packet currentPacket = r.ListOfPackets[0];
             DateTime interval = currentPacket.Time;
             Packet end = r.ListOfPackets[r.ListOfPackets.Count - 1];
-            int y = 1;
+            int increment = 1;
+            int smallFileincrement = 1;
 
-            for (int x = 0; x < r.ListOfPackets.Count - 1; x++)
+            if (r.ListOfPackets.Count < 150)
             {
-                if (interval >= end.Time) { break; }
-                do
+                for (int x = 0; x < r.ListOfPackets.Count - 1; x++)
                 {
-                    if (currentPacket.Payload != null)
+                    if (increment >= r.ListOfPackets.Count) { break; }
+                    do
                     {
-                        dataRatePerMinute += currentPacket.Payload.Length;
-                    }
-                    currentPacket = r.ListOfPackets[y];
-                    y++;
-                } while (currentPacket.Time <= interval);
+                        if (currentPacket.Payload != null)
+                        {
+                            string removeWhitespace = currentPacket.Payload.Replace(" ", "");
+                            dataRatePerMinute += (removeWhitespace.Length / 2);
+                        }
+                        Console.WriteLine(x);
+                        currentPacket = r.ListOfPackets[smallFileincrement];
+                        
+                        smallFileincrement++;
+                    } while (smallFileincrement < increment);
+                    increment += 5;
+                    plot.Add(dataRatePerMinute);
+                    dataRatePerMinute = 0;
+                }
+            }
 
-                plot.Add(dataRatePerMinute);
-                interval = interval.AddMinutes(1);
-                dataRatePerMinute = 0;
+            else
+            {
+                for (int x = 0; x < r.ListOfPackets.Count - 1; x++)
+                {
+                    if (interval >= end.Time) { break; }
+                    do
+                    {
+                        if (currentPacket.Payload != null)
+                        {
+                            string removeWhitespace = currentPacket.Payload.Replace(" ", "");
+                            dataRatePerMinute += (removeWhitespace.Length / 2);
+                        }
+                        currentPacket = r.ListOfPackets[increment];
+                        increment++;
+                    } while (currentPacket.Time <= interval);
+
+                    plot.Add(dataRatePerMinute);
+                    interval = interval.AddMinutes(1);
+                    dataRatePerMinute = 0;
+                }
             }
             return plot;
         }
