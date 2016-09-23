@@ -232,7 +232,8 @@ namespace Star_Reader
         private void DataRate_Checked(object sender, RoutedEventArgs e)
         {
             Graphing getPlots = new Graphing();
-            List<double> plots = getPlots.getPlots(gData);
+
+            List<double> plots = gData.getDataRates();//getPlots.getPlots(gData);
             for (int x = 0; x < plots.Count; x++)
             {
                 SeriesCollection[0].Values.Add(plots[x]);
