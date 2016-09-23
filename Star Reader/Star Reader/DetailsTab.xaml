@@ -94,11 +94,11 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <lvc:Gauge Grid.Column="0" Uses360Mode="False" From="0" To="100" Value="{Binding Value}" 
+            <lvc:Gauge Grid.Column="0" Uses360Mode="False" From="0" To="{Binding totalNubOfPackets}" Value="{Binding errValue}" 
                    LabelFormatter="{Binding Formatter}" />
-            <lvc:Gauge   Grid.Column="1" Uses360Mode="False" From="0" To="100" Value="{Binding Value}" 
+            <lvc:Gauge   Grid.Column="1" Uses360Mode="False" From="0" To="100" Value="{Binding packetValue}" 
                    LabelFormatter="{Binding Formatter}" />
-            <lvc:Gauge   Grid.Column="2" Uses360Mode="False" From="0" To="100" Value="{Binding Value}" 
+            <lvc:Gauge   Grid.Column="2" Uses360Mode="False" From="0" To="100" Value="{Binding charValue}" 
                    LabelFormatter="{Binding Formatter}" />
         </Grid>
         <lvc:CartesianChart Grid.Row="4" Grid.ColumnSpan="1" Grid.Column="0">

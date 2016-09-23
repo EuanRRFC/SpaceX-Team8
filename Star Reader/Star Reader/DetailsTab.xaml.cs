@@ -23,6 +23,8 @@ namespace Star_Reader
         private ICollectionView dataGridCollection;
         private string filterString;
         public string[] Labels { get; set; }
+        
+
 
 
         public ICollectionView DataGridCollection
@@ -76,7 +78,9 @@ namespace Star_Reader
             DataGridCollection = CollectionViewSource.GetDefaultView(App.RecordingData[portNr].ListOfPackets);
             DataGridCollection.Filter = Filter;
             InitialiseTimeStamps();
-           
+            initialiseGauge();
+
+
         }
 
         //generating the button in the overview
@@ -270,6 +274,27 @@ namespace Star_Reader
         public SeriesCollection SeriesCollection { get; set; }
         public Func<double, string> Formatter { get; set; }
 
+
+
+       private void initialiseGauge()
+        {
+            
+          
+            errValue = gData.ErrorsPresent;
+            packetValue = gData.ListOfPackets.Count;
+            charValue = gData.getTotalPackets();
+
+            Formatter = x => x + " ";
+
+            DataContext = this;
+
+        }
+        public double errValue { get; set; }
+
+        public double packetValue { get; set; }
+        
+        public double charValue { get; set; }
+       
         /*
          * Initialise the time stamps for the left side of the overview.
          * Coordinates for the buttons are all 0.
@@ -337,7 +362,7 @@ namespace Star_Reader
                 //Content = width
             };
 
-            TimeStamps.Children.Add(Lbl1);
+           // TimeStamps.Children.Add(Lbl1);
             //}
             //else
             //{
