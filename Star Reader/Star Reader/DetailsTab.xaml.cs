@@ -23,6 +23,9 @@ namespace Star_Reader
         private ICollectionView dataGridCollection;
         private string filterString;
         public string[] Labels { get; set; }
+        public string errorNumb;
+        public string dataCharsNumb;
+        public string packetNumb;
 
         public ICollectionView DataGridCollection
         {
@@ -67,12 +70,15 @@ namespace Star_Reader
                 || packet.Payload != null && CultureInfo.CurrentCulture.CompareInfo.IndexOf(packet.Payload, filterString, CompareOptions.IgnoreCase) >= 0;
         }
 
+
         public DetailsTab(int portNr)
         {
             InitializeComponent();
             PopulateOverview(portNr);
             DataGridCollection = CollectionViewSource.GetDefaultView(App.RecordingData[portNr].ListOfPackets);
             DataGridCollection.Filter = Filter;
+           
+           
         }
 
         public void PopulateOverview(int portNr)
