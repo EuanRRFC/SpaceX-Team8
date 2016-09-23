@@ -83,7 +83,7 @@ namespace Star_Reader
 
         //generating the button in the overview
         public void PopulateOverview(int portNr)
-        {
+        { 
             const int size = 20;
             var r = App.RecordingData[portNr];
             if (r == null) return;
